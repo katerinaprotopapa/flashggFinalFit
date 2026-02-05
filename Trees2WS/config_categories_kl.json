@@ -1,0 +1,15 @@
+{
+  "cat_dict": {
+    "0": "background",
+    "1": "ttH_hadr_C1_LT10",
+    "2": "ttH_hadr_C1_10_29",
+    "3": "ttH_hadr_C1_29_48",
+    "4": "ttH_hadr_C1_48_71",
+    "5": "ttH_hadr_C1_GT_71",
+    "6": "ttH_lept_C1_LT10",
+    "7": "ttH_lept_C1_10_29",
+    "8": "ttH_lept_C1_29_48",
+    "9": "ttH_lept_C1_48_71",
+    "10": "ttH_lept_C1_GT_71"
+  }
+}

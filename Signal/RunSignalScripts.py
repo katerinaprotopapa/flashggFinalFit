@@ -52,6 +52,7 @@ if opt.inputConfig != '':
     options['smears']       = _cfg['smears']
     options['batch']        = _cfg['batch']
     options['queue']        = _cfg['queue']
+    options['max_runtime']  = _cfg['max_runtime']
     # Options from command line
     options['mode']                    = opt.mode
     options['modeOpts']                = opt.modeOpts
@@ -87,10 +88,12 @@ if not WSFileNames: leave()
 # If proc/cat == auto. Extract processes and categories
 if options['procs'] == "auto":
   options['procs'] = extractListOfProcs(WSFileNames)
+  print("options['procs']: ", options['procs'])
 options['nProcs'] = len(options['procs'].split(","))
 
 if options['cats'] == "auto":
   options['cats'] = extractListOfCats(WSFileNames)
+  print("options['cats']: ", options['cats'])
 options['nCats'] = len(options['cats'].split(","))
 
 # Extract low and high MH values
@@ -117,6 +120,7 @@ if options['batch'] in ['condor','IC','SGE']:
   print(" --> Job information:")
   print("     * Batch: %s"%options['batch'])
   print("     * Queue: %s"%options['queue'])
+  print("     * MaxRuntime: %s"%options['max_runtime'])
   print("")
 elif options['batch'] == "local":
   print(" --> Job information:")
