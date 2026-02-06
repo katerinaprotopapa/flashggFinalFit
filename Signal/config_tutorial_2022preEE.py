@@ -1,11 +1,11 @@
 # Config file: options for signal fitting
 
-_year = '2022preEE'
+_year = 'preEE'
 
 signalScriptCfg = {
   
   # Setup
-  'inputWSDir':'PATH_TO_INPUTS/workspaces/signal_%s'%_year,
+  'inputWSDir':'/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/flashggFinalFit/RooWorkspaces_5Feb2026/signal/%s'%_year,
   'procs':'auto', # if auto: inferred automatically from filenames
   'cats':'auto', # if auto: inferred automatically from (0) workspace
   'ext':'tutorial_%s'%_year,
@@ -14,13 +14,14 @@ signalScriptCfg = {
   'massPoints':'120,125,130',
 
   #Photon shape systematics  
-  'scales':'Scale', # separate nuisance per year
+  'scales':'', # separate nuisance per year
   'scalesCorr':'', # correlated across years
   'scalesGlobal':'', # affect all processes equally, correlated across years
-  'smears':'Smearing', # separate nuisance per year
+  'smears':'', # separate nuisance per year
 
   # Job submission options
   'batch':'condor', # ['condor','SGE','IC','local']
   'queue':'espresso',
+  'max_runtime': 3600,
 
 }
