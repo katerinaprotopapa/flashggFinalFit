@@ -6,13 +6,13 @@ import math
 from collections import OrderedDict as od
 from commonObjects import *
 
-# Function for iterating over ROOT argsets in workspace
-def rooiter(x):
-  iter = x.iterator()
-  ret = iter.Next()
-  while ret:
-    yield ret
-    ret = iter.Next()
+# # Function for iterating over ROOT argsets in workspace
+# def rooiter(x):
+#   iter = x.iterator()
+#   ret = iter.Next()
+#   while ret:
+#     yield ret
+#     ret = iter.Next()
 
 def extractWSFileNames( _inputWSDir ): 
   if not os.path.isdir(_inputWSDir):
@@ -73,7 +73,7 @@ def signalFromFileName(_fileName):
     elif "ZToNuNu" in _fileName: d = "_ZToNuNu"
     else: d = "_ZToQQ"
   elif "GluGlu" in _fileName: p = "ggh"
-  elif "VBF" in _fileName: p = "vbf"
+  elif "VBF" in _fileName: p = "VBF"
   elif "WH" in _fileName: p = "wh"
   elif "ZH" in _fileName: p = "zh"
   elif "ttH" in _fileName: p = "tth"
@@ -94,7 +94,7 @@ def massFromFileName(_fileName):
 # Function for converting STXS process to production mode in dataset name
 procToDataMap = od()
 procToDataMap['GG2H'] = 'ggh'
-procToDataMap['VBF'] = 'vbf'
+procToDataMap['VBF'] = 'VBF'
 procToDataMap['WH2HQQ'] = 'wh'
 procToDataMap['ZH2HQQ'] = 'zh'
 procToDataMap['QQ2HLNU'] = 'wh'

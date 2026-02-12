@@ -18,11 +18,12 @@ def writePreamble(_file):
   _file.write("cd %s\n"%bwd__)
   _file.write("export PYTHONPATH=$PYTHONPATH:%s/tools:%s/tools\n\n"%(cwd__,bwd__))
 
-def writeCondorSub(_file,_exec,_queue,_nJobs,_jobOpts,doHoldOnFailure=True,doPeriodicRetry=True):
+def writeCondorSub(_file,_exec,_queue,_nJobs,_jobOpts,_maxruntime,doHoldOnFailure=True,doPeriodicRetry=True):
   _file.write("executable = %s.sh\n"%_exec)
   _file.write("arguments  = $(ProcId)\n")
   _file.write("output     = %s.$(ClusterId).$(ProcId).out\n"%_exec)
   _file.write("error      = %s.$(ClusterId).$(ProcId).err\n\n"%_exec)
+  _file.write("+MaxRuntime = %s\n"%_maxruntime)
   if _jobOpts != '':
     _file.write("# User specified job options\n")
     for jo in _jobOpts.split(":"): _file.write("%s\n"%jo)
@@ -69,7 +70,7 @@ def writeSubFiles(_opts):
 
     # Condor submission file
     _fsub = open("%s/%s.sub"%(_jobdir,_executable),"w")
-    if( _opts['mode'] == "fTestParallel" ): writeCondorSub(_fsub,_executable,_opts['queue'],_opts['nCats'],_opts['jobOpts'])
+    if( _opts['mode'] == "fTestParallel" ): writeCondorSub(_fsub,_executable,_opts['queue'],_opts['nCats'],_opts['jobOpts'],_opts['max_runtime'])
     _fsub.close()
     
   # SGE...

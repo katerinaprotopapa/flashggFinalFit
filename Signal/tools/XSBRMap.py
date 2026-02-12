@@ -151,3 +151,12 @@ globalXSBRMap['STXS']['THQ_FWDH'] = {'mode':'tHq','factor':0.0279}
 globalXSBRMap['STXS']['THQ'] = {'mode':'tHq','factor':0.9721}
 globalXSBRMap['STXS']['THW_FWDH'] = {'mode':'tHW','factor':0.0106}
 globalXSBRMap['STXS']['THW'] = {'mode':'tHW','factor':0.9894}
+
+# kl analysis
+globalXSBRMap['kl'] = od()
+globalXSBRMap['kl']['decay'] = {'mode':'hgg'}
+globalXSBRMap['kl']['ggH'] = {'mode':'constant', 'factor':51.96}
+globalXSBRMap['kl']['VBF'] = {'mode':'constant', 'factor':4.067}
+globalXSBRMap['kl']['WH'] = {'mode':'constant', 'factor':1.442}
+globalXSBRMap['kl']['ZH'] = {'mode':'constant', 'factor':0.936}
+globalXSBRMap['kl']['ttH'] = {'mode':'constant', 'factor':0.564}

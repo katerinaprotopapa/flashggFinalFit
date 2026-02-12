@@ -36,7 +36,7 @@ def leave():
 
 # Parser Arguments
 (opt, args) = get_options()
-proc=opt.inputTreeFile.split('/')[-2] # HEREEE: CHECK THIS AGAIN LATERRRR
+proc=opt.inputTreeFile.split('/')[-2]
 print("proc: ", proc)
 
 # Input Config (e.g. config_tutorial_kl.py)
@@ -191,17 +191,26 @@ for stxsId in data[stxsVar].unique():
         dset_name = f"{opt.productionMode}_{opt.year}_hgg_{opt.inputMass}_13TeV_{cat_renamed}"
         dset = ROOT.RooDataSet(dset_name, dset_name, aset, ROOT.RooFit.WeightVar("weight"))
 
-        # Only try to convert numeric columns
-        numeric_var_names = [v for v in var_names if v in df_cat.columns and pd.api.types.is_numeric_dtype(df_cat[v])]
-        df_cat.loc[:, numeric_var_names] = df_cat[numeric_var_names].astype('float64')
-        df_cat = df_cat.dropna(subset=numeric_var_names)
+        # # Only try to convert numeric columns
+        # numeric_var_names = [v for v in var_names if v in df_cat.columns and pd.api.types.is_numeric_dtype(df_cat[v])]
+        # df_cat.loc[:, numeric_var_names] = df_cat[numeric_var_names].astype('float64')
+        # df_cat = df_cat.dropna(subset=numeric_var_names)
+        df_cat = df_cat.dropna(subset=var_names)
         if opt.v:
             print(f"[INFO] Category {cat} has {len(df_cat)} entries after cleaning.")
-        for row in df_cat[numeric_var_names].itertuples(index=False, name=None):
-            for name, val in zip(numeric_var_names, row):
+        # for row in df_cat[numeric_var_names].itertuples(index=False, name=None):
+        #     for name, val in zip(numeric_var_names, row):
+        #         var = aset.find(name)
+        #         if var:  # safeguard
+        #             var.setVal(float(val))
+        #     dset.add(aset, aset.find("weight").getVal())
+
+        for row in df_cat.itertuples(index=False):
+            for name in var_names:
+                val = getattr(row, name)
                 var = aset.find(name)
-                if var:  # safeguard
-                    var.setVal(float(val))
+                if var:
+                    var.setVal(val)
             dset.add(aset, aset.find("weight").getVal())
         getattr(ws, 'import')(dset)
     

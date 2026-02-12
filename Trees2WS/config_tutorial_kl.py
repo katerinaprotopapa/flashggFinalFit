@@ -16,6 +16,8 @@ trees2wsCfg = {
   'systematics':[],
 
   # Analysis categories: python list of cats or use 'auto' to extract from input tree
-  'cats':'auto'
+  'cats':'auto',
+
+  'pred': 'pred_C1_reco'
 
 }

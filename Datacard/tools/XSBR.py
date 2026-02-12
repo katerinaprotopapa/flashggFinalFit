@@ -144,6 +144,15 @@ XSBRMap['STXS']['THQ'] = {'mode':'tHq','factor':0.9721}
 XSBRMap['STXS']['THW_FWDH'] = {'mode':'tHW','factor':0.0106}
 XSBRMap['STXS']['THW'] = {'mode':'tHW','factor':0.9894}
 
+# kl analysis
+XSBRMap['kl'] = od()
+XSBRMap['kl']['decay'] = {'mode':'hgg'}
+XSBRMap['kl']['ggH'] = {'mode':'constant', 'factor':51.96}
+XSBRMap['kl']['VBF'] = {'mode':'constant', 'factor':4.067}
+XSBRMap['kl']['WH'] = {'mode':'constant', 'factor':1.442}
+XSBRMap['kl']['ZH'] = {'mode':'constant', 'factor':0.936}
+XSBRMap['kl']['ttH'] = {'mode':'constant', 'factor':0.564}
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Functions for loading XS*BR below
 # Importing modules from combine

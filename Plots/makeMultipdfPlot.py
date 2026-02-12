@@ -114,7 +114,7 @@ if opt.inputSignalWSFile is not None:
   spdfs = od()
   for year in years_to_process:
     allNorms = wsig.allFunctions().selectByName("*%s*normThisLumi"%year)
-    for norm in rooiter(allNorms):
+    for norm in allNorms:
       # Set integrated lumi
       wsig.var("IntLumi").setVal(lumiMap[year]*lumiScaleFactor)
       proc = norm.GetName().split("hggpdfsmrel_")[-1].split("_%s_"%year)[0]
@@ -248,7 +248,9 @@ lat1.SetTextFont(42)
 lat1.SetTextAlign(31)
 lat1.SetNDC()
 lat1.SetTextSize(0.06)
-#lat1.DrawLatex(0.9,0.92,"137 fb^{-1} (13 TeV)")
+lat1.DrawLatex(0.9,0.92,"61.9 fb^{-1} (13.6 TeV)")
+lat1.DrawLatex(0.38,0.92,"#bf{CMS} #it{Preliminary}")
+
 
 pad2.cd()
 h_axes_ratio = hists_ratio['data'].Clone()

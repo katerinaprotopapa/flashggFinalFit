@@ -44,6 +44,7 @@ if opt.inputConfig != '':
     options['lumi']         = lumiMap[_cfg['year']]
     options['batch']        = _cfg['batch']
     options['queue']        = _cfg['queue']
+    options['max_runtime']  = _cfg['max_runtime']
 
     # Options from command line
     options['mode']                    = opt.mode

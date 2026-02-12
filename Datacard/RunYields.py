@@ -36,6 +36,7 @@ def get_options():
   # For submission
   parser.add_option('--batch', dest='batch', default='IC', help='Batch')
   parser.add_option('--queue', dest='queue', default='microcentury', help='Queue: should not take long (microcentury will do)')
+  parser.add_option('--max_runtime', dest='max_runtime', default='3600', help='MaxRuntime in condor')
   parser.add_option('--jobOpts', dest='jobOpts', default='', help="Additional options to add to job submission. For Condor separate individual options with a colon (specify all within quotes e.g. \"option_xyz = abc+option_123 = 456\")")
   parser.add_option('--printOnly', dest='printOnly', default=False, action="store_true", help="Dry run: print submission files only")
   return parser.parse_args()
@@ -69,6 +70,7 @@ if opt.ignore_warnings: options['modeOpts'] += ' --ignore-warnings'
 options['batch'] = opt.batch
 options['queue'] = opt.queue
 options['jobOpts'] = opt.jobOpts
+options['max_runtime'] = opt.max_runtime
 options['printOnly'] = opt.printOnly
 
 # If auto: extract cats from first input workspace dir
