@@ -22,6 +22,7 @@ def get_options():
   parser.add_option('--commonOpts', dest='commonOpts', default="--cminDefaultMinimizerStrategy 0 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2", help="Common combine options for running fits")
   parser.add_option('--batch', dest='batch', default='condor', help='Batch: [crab,condor/SGE/IC]')
   parser.add_option('--queue', dest='queue', default='workday', help='Queue e.g. for condor=workday, for IC=hep.q')
+  parser.add_option('--max_runtime', dest='max_runtime', default='3600', help='Max Runtime for condor job submission')
   parser.add_option('--subOpts', dest='subOpts', default="", help="Submission options")
   parser.add_option('--doCustomCrab', dest='doCustomCrab', default=False, action="store_true", help="Load crab options from custom_crab.py file")
   parser.add_option('--crabMemory', dest='crabMemory', default='5900', help="Memory for crab job")
@@ -60,7 +61,7 @@ if opt.batch == 'crab':
   if opt.doCustomCrab: job_opts += " --custom-crab %s/src/flashggFinalFit/Combine/custom_crab.py"%os.environ['CMSSW_BASE']
   job_opts += " --memory %s"%opt.crabMemory
 elif opt.batch == 'condor': 
-  sub_opts = "--sub-opts=\'+JobFlavour = \"%s\""%opt.queue
+  sub_opts = "--sub-opts=\'+JobFlavour = \"%s\"\n+MaxRuntime = %s" % (opt.queue, opt.max_runtime)
   if opt.subOpts != "": sub_opts += "\n%s"%opt.subOpts
   sub_opts += "\'"
   job_opts = "--job-mode condor %s"%sub_opts

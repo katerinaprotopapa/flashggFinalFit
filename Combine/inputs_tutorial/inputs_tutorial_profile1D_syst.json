@@ -3,7 +3,7 @@
         "pois":"r",
         "fits":"profile1D:syst:r",
         "points":"20:10",
-        "fit_opts":"--setParameterRanges r=0,2 --saveSpecifiedNuis all --freezeParameters MH"
+        "fit_opts":"--setParameterRanges r=-3,3 --saveSpecifiedNuis all --freezeParameters MH"
     },
 
     "mu_ggH_VBF":{
