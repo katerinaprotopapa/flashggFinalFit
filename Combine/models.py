@@ -1,6 +1,9 @@
 models = {
   "mu_inclusive":"",
 
+  "mu_ttH":"-P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel \
+--PO \"map=.*/ttH.*:r_ttH[1,-50,50]\"",
+
   "mu_ggH_VBF":"-P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel \
 --PO \"map=.*/ggH.*:r_ggH[1,0,3]\" \
 --PO \"map=.*/qqH.*:r_VBF[1,0,5]\"",
@@ -248,5 +251,7 @@ models = {
 
   "kappas":"-P HiggsAnalysis.CombinedLimit.LHCHCGModels:K2 --PO BRU=0",
 
-  "kVkF":"-P HiggsAnalysis.CombinedLimit.LHCHCGModels:K3 --PO BRU=0"
+  "kVkF":"-P HiggsAnalysis.CombinedLimit.LHCHCGModels:K3 --PO BRU=0",
+
+  "k_lambda":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH"
 }

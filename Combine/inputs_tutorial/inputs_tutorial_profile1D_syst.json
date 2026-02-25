@@ -11,5 +11,20 @@
         "fits":"profile1D:syst:all",
         "points":"20:10",
         "fit_opts":"--saveInactivePOI 1 --setParameterRanges r_ggH=0,3:r_VBF=0,5 --saveSpecifiedNuis all --freezeParameters MH"
+    },
+
+    "mu_ttH":{
+        "pois":"r_ttH",
+        "fits":"profile1D:syst:r_ttH",
+        "points":"20:10",
+        "fit_opts":"--saveInactivePOI 1 --setParameterRanges r_ttH=-3,3 --saveSpecifiedNuis all --freezeParameters MH"
+    },
+
+    "k_lambda":{
+        "pois":"k_lambda",
+        "fits":"profile1D:syst:k_lambda",
+        "points":"100:20",
+        "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-60,100 --freezeParameters MH --saveSpecifiedNuis all"
     }
+
 }
