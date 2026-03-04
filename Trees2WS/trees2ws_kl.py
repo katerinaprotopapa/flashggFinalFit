@@ -195,7 +195,7 @@ for stxsId in data[stxsVar].unique():
         # numeric_var_names = [v for v in var_names if v in df_cat.columns and pd.api.types.is_numeric_dtype(df_cat[v])]
         # df_cat.loc[:, numeric_var_names] = df_cat[numeric_var_names].astype('float64')
         # df_cat = df_cat.dropna(subset=numeric_var_names)
-        df_cat = df_cat.dropna(subset=var_names)
+        # df_cat = df_cat.dropna(subset=var_names)
         if opt.v:
             print(f"[INFO] Category {cat} has {len(df_cat)} entries after cleaning.")
         # for row in df_cat[numeric_var_names].itertuples(index=False, name=None):

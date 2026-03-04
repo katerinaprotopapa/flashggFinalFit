@@ -225,7 +225,7 @@ colourOptions=[1,2,3,4,5,6,7,8,9]
 bnames = list(bpdfs.keys())
 for bidx, bname in enumerate(bnames):
   hists[bname].SetLineWidth(2)
-  hists[bname].SetLineColor( colourOptions[bidx] )
+  hists[bname].SetLineColor( colourOptions[bidx % len(colourOptions)] )
   hists[bname].Draw("HIST same C")
 hists['data'].SetMarkerStyle(20)
 hists['data'].SetMarkerColor(1)
@@ -248,7 +248,7 @@ lat1.SetTextFont(42)
 lat1.SetTextAlign(31)
 lat1.SetNDC()
 lat1.SetTextSize(0.06)
-lat1.DrawLatex(0.9,0.92,"61.9 fb^{-1} (13.6 TeV)")
+lat1.DrawLatex(0.9,0.92,"34.70 fb^{-1} (13.6 TeV)")
 lat1.DrawLatex(0.38,0.92,"#bf{CMS} #it{Preliminary}")
 
 
@@ -278,7 +278,7 @@ if doSignal:
 
 for bidx, bname in enumerate(bnames):
   hists_ratio[bname].SetLineWidth(2)
-  hists_ratio[bname].SetLineColor( colourOptions[bidx] )
+  hists_ratio[bname].SetLineColor( colourOptions[bidx % len(colourOptions)] )
   hists_ratio[bname].Draw("HIST same C")
 hists_ratio['data'].SetMarkerStyle(20)
 hists_ratio['data'].SetMarkerColor(1)

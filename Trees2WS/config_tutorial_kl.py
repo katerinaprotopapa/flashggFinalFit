@@ -6,7 +6,7 @@ trees2wsCfg = {
   'inputTreeDir':'DiphotonTree',
 
   # Variables to be added to dataframe: use wildcard * for common strings
-  'mainVars':["CMS_hgg_mass","weight","dZ"], # Var for the nominal RooDataSets
+  'mainVars':["CMS_hgg_mass","weight","dZ","C1_pred_gen"], # Var for the nominal RooDataSets
   'dataVars':["CMS_hgg_mass","weight"], # Vars to be added for data
   'stxsVar':'',
   'systematicsVars':["CMS_hgg_mass","weight"], # Variables to add to sytematic RooDataHists

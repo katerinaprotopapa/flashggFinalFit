@@ -735,7 +735,8 @@ int main(int argc, char* argv[]){
 	RooRealVar *mass = (RooRealVar*)inWS->var("CMS_hgg_mass");
 	std:: cout << "[INFO] Got mass from ws " << mass << std::endl;
 	pdfsModel.setObsVar(mass);
-	double upperEnvThreshold = 0.1; // upper threshold on delta(chi2) to include function in envelope (looser than truth function)
+  // double upperEnvThreshold = 0.1; // upper threshold on delta(chi2) to include function in envelope (looser than truth function)
+	double upperEnvThreshold = 0.05; // upper threshold on delta(chi2) to include function in envelope (check if this is acceptable with the truth function)
 
 	fprintf(resFile,"Truth Model & d.o.f & $\\Delta NLL_{N+1}$ & $p(\\chi^{2}>\\chi^{2}_{(N\\rightarrow N+1)})$ \\\\\n");
 	fprintf(resFile,"\\hline\n");

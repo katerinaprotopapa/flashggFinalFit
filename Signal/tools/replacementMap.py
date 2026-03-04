@@ -247,32 +247,32 @@ globalReplacementMap['kl'] = od()
 #  * single proc x cat for wrong vertex since for dZ > 1cm shape independent of proc x cat
 #  * use proc x cat with highest number of WV events
 globalReplacementMap['kl']['procWV'] = "ttH"
-globalReplacementMap['kl']['catWV'] = "ttH_hadr_C1_LT10"
+globalReplacementMap['kl']['catWV'] = "hadr_C1_10_29"
 # For RIGHT VERTEX SCENARIO:
 #  * default mapping is to use diagonal process from given category 
 #  * if few events in diagonal process then may need to change the category aswell (see catRVMap)
 #  * map must contain entry for all cats being processed (for replacement proc and cat)
 globalReplacementMap['kl']['procRVMap'] = od()
-globalReplacementMap["kl"]["procRVMap"]["ttH_hadr_C1_LT10"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_hadr_C1_10_29"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_hadr_C1_29_48"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_hadr_C1_48_71"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_hadr_C1_GT_71"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_lept_C1_LT10"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_lept_C1_10_29"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_lept_C1_29_48"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_lept_C1_48_71"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["ttH_lept_C1_GT_71"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["hadr_C1_LT_10"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["hadr_C1_10_29"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["hadr_C1_29_48"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["hadr_C1_48_71"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["hadr_C1_GT_71"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["lept_C1_LT_10"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["lept_C1_10_29"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["lept_C1_29_48"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["lept_C1_48_71"] = "ttH"
+globalReplacementMap["kl"]["procRVMap"]["lept_C1_GT_71"] = "ttH"
 # Replacement category for RV fit
 globalReplacementMap["kl"]["catRVMap"] = od()
-globalReplacementMap["kl"]["catRVMap"]["ttH_hadr_C1_LT10"] = "ttH_hadr_C1_LT10"
-globalReplacementMap["kl"]["catRVMap"]["ttH_hadr_C1_10_29"] = "ttH_hadr_C1_10_29"
-globalReplacementMap["kl"]["catRVMap"]["ttH_hadr_C1_29_48"] = "ttH_hadr_C1_29_48"
-globalReplacementMap["kl"]["catRVMap"]["ttH_hadr_C1_48_71"] = "ttH_hadr_C1_48_71"
-globalReplacementMap["kl"]["catRVMap"]["ttH_hadr_C1_GT_71"] = "ttH_hadr_C1_GT_71"
-globalReplacementMap["kl"]["catRVMap"]["ttH_lept_C1_LT10"] = "ttH_lept_C1_LT10"
-globalReplacementMap["kl"]["catRVMap"]["ttH_lept_C1_10_29"] = "ttH_lept_C1_10_29"
-globalReplacementMap["kl"]["catRVMap"]["ttH_lept_C1_29_48"] = "ttH_lept_C1_29_48"
-globalReplacementMap["kl"]["catRVMap"]["ttH_lept_C1_48_71"] = "ttH_lept_C1_48_71"
-globalReplacementMap["kl"]["catRVMap"]["ttH_lept_C1_GT_71"] = "ttH_lept_C1_GT_71"
+globalReplacementMap["kl"]["catRVMap"]["hadr_C1_LT_10"] = "hadr_C1_LT_10"
+globalReplacementMap["kl"]["catRVMap"]["hadr_C1_10_29"] = "hadr_C1_10_29"
+globalReplacementMap["kl"]["catRVMap"]["hadr_C1_29_48"] = "hadr_C1_29_48"
+globalReplacementMap["kl"]["catRVMap"]["hadr_C1_48_71"] = "hadr_C1_48_71"
+globalReplacementMap["kl"]["catRVMap"]["hadr_C1_GT_71"] = "hadr_C1_GT_71"
+globalReplacementMap["kl"]["catRVMap"]["lept_C1_LT_10"] = "lept_C1_LT_10"
+globalReplacementMap["kl"]["catRVMap"]["lept_C1_10_29"] = "lept_C1_10_29"
+globalReplacementMap["kl"]["catRVMap"]["lept_C1_29_48"] = "lept_C1_29_48"
+globalReplacementMap["kl"]["catRVMap"]["lept_C1_48_71"] = "lept_C1_48_71"
+globalReplacementMap["kl"]["catRVMap"]["lept_C1_GT_71"] = "lept_C1_GT_71"
 
