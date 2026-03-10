@@ -11,25 +11,25 @@ eras_lumi = {
     "preEE": 8.00,
     "postEE": 26.70,
 }
-xs_procs = {
+xs_procs = { # XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
     "ggH": 51.96,
     "VBF": 4.067,
-    "WH": 1.442, # inclusive - we don't use this
-    "ZH": 0.936, # inclusive - we don't use this
+    "WH": 1.442,
+    "ZH": 0.944, # 0.936, # since adding ggZH in
     "ttH": 0.564,
 }
-xs_WH_ZH_procs = { # taken from https://gitlab.cern.ch/cms-analysis/hig/run3hggstxs/run3hggstxs/-/blob/master/configs/cross_sections.json?ref_type=heads
-    "WMINUSH2HQQ": 0.38268657,
-    "WMINUSH2HLNU": 0.18495666,
-    "WPLUSH2HQQ": 0.5992074900000001,
-    "WPLUSH2HLNU": 0.28960362,
-    "ZH2HLL": 0.0953093586,
-    "ZH2HNUNU": 0.1887,
-    "ZH2HQQ": 0.6598804899999999,
-    "GG2HLL": 0.006838,
-    "GG2HNUNU": 0.01351,
-    "GG2HQQ": 0.04776,
-}
+# xs_procs = { # 'plot_weight' was calculated for xs values at mH=125GeV instead of 125.38GeV
+#     "ggH": 52.23,
+#     "VBF": 4.078,
+#     "WH": 1.442,
+#     "ZH": 0.944, # adding ggZH in
+#     "ttH": 0.57,
+# }
+# print("WH: ", 0.38268657 + 0.18495666 + 0.5992074900000001 + 0.28960362)
+# print("ZH: ", 0.0953093586 + 0.1887 + 0.6598804899999999 + 0.006838 + 0.01351 + 0.04776)
+# print("WH: ", 0.59328485+0.37886577+0.2867411412+0.1831100256)
+# print("ZH: ", 0.560266754+0.087945636+0.16028+0.094170117+0.014781978+0.02694)
+# exit()
 br = 0.002277
 categories = {
     1: "hadr_C1_LT_10", 
@@ -77,7 +77,7 @@ for era, lumi in eras_lumi.items():
 
             # ToDo: I will have to add the new XS for WH and ZH here
             total_yields[era][proc][cat] = xs*1000 * br * lumi * sum_w # since xs is in pb and lumi in fb^-1
-            # total_yields[era][proc][cat] = sum_w
+            # total_yields[era][proc][cat] = sum_w # just weights
 # print(total_yields)
 
 # --- Parquet files from Preprocessing ---
@@ -94,7 +94,7 @@ for era, lumi in eras_lumi.items():
 
         df = pd.read_parquet(parquet_path, columns=[pred_label, "weight", "plot_weight"])
         yields = df.groupby(pred_label)["plot_weight"].sum()
-        # yields = df.groupby(pred_label)["weight"].sum()
+        # yields = df.groupby(pred_label)["weight"].sum() # just weights
 
         for i, cat in categories.items():
             total_yields_exp[era][proc][cat] = yields.get(i, 0.0)
@@ -122,7 +122,7 @@ for era in eras_lumi.keys():
     # cats
     unique_cats = list(dict.fromkeys(categories.values()))
     for cat in unique_cats:
-        row = f"{cat:<20} |"
+        row = f"{cat:<22} |"
         for proc in xs_procs.keys():
             val_ws = total_yields[era][proc][cat] 
             val_exp = total_yields_exp[era][proc][cat]
@@ -130,7 +130,6 @@ for era in eras_lumi.keys():
             row += f" {val_ws:7.5f} {val_exp:7.5f} {ratio:6.3f} |"
         print(row)
 print(f"\n{'='*150}")
-exit()
 
 
 # --- Printing: "plot_weight" is as expected check in Parquet files ---
@@ -146,22 +145,11 @@ pred_label = "pred_C1_reco"
 total_yields_exp = {era: {proc: {cat: 0.0 for cat in categories.values()} for proc in xs_procs} for era in eras_lumi.keys()}
 parquet_dir = "/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/final_fits/MC/"
 for era, lumi in eras_lumi.items():
-    for proc, xs_incl in xs_procs.items():
+    for proc, xs in xs_procs.items():
         parquet_path = os.path.join(parquet_dir, era, proc, syst, f"{proc}_{era}_{syst}.parquet")
         if not os.path.exists(parquet_path):
             print(f"Parquet file not found: {parquet_path}")
             continue
         df = pd.read_parquet(parquet_path)
         df["plot_weight_check"] = xs*1000 * br * lumi * df["weight"]
-        # print(df)
-
-        # Identifying issues with WH and ZH
-        # --- What about preprocessing? ---
-        df_proc = df_preprocess[(df_preprocess["era"]==era) & (df_preprocess["sample_group"]==proc)].copy()
-        if proc=="WH" or proc=="ZH":
-            xs = df_proc["sample_name"].map(xs_WH_ZH_procs).fillna(xs_incl)
-        else:
-            xs = xs_incl
-        df_proc.loc[:,"plot_weight_check"] = xs*1000 * br * lumi * df_proc["weight"]
-        # print("unique sample names: ", df_proc["sample_name"].unique())
-        print(df_proc[["era", "sample_group", "sample_name", "weight", "plot_weight", "plot_weight_check"]])
+        print(df[["era", "sample_name", "weight", "plot_weight", "plot_weight_check"]])
