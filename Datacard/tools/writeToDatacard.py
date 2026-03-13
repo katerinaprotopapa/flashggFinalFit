@@ -230,7 +230,6 @@ def writeMCStatUncertainty(f,d,options):
   
   return True
 
-
 def writePdfIndex(f,d,options):
   f.write("\n")
   for cat in d[~d['cat'].str.contains("NOTAG")].cat.unique(): 
@@ -238,7 +237,18 @@ def writePdfIndex(f,d,options):
     f.write("%-55s  discrete\n"%indexStr)
   return True
 
+def writeRateParams(f,):
+  # Add rateParam (shape-only effect for kl)
+  f.write("mu_ttH rateParam * ttH_* 1. [-1,3]\n")  # Add this line for the rateParam
+
+def writeLumiParams(f,):
+  # Add lumi-scale parameter
+  f.write("\n")
+  f.write("lumi_scale rateParam * * 1.\n")
+  f.write("nuisance edit freeze lumi_scale\n")
+
 def writeBreak(f):
   lbreak = '----------------------------------------------------------------------------------------------------------------------------------'
   f.write("%s\n"%lbreak)
+  
 

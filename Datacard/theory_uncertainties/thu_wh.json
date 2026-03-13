@@ -1,0 +1,7 @@
+{   
+    "WH":{
+        "QCDscale_WH":[1.005,0.993],
+        "pdf_Higgs_WH":1.017,
+        "alphaS_WH":1.009
+    }
+}

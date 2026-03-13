@@ -1,3 +1,7 @@
+"""
+NOTE!!! Ignore "plot_weight" of ZH samples for now (it was calculated using the XS of NLO ggZH samples instead of the highest order theoretical calculation XS value)
+"""
+
 import ROOT
 import os
 import pickle
@@ -18,18 +22,6 @@ xs_procs = { # XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-
     "ZH": 0.944, # 0.936, # since adding ggZH in
     "ttH": 0.564,
 }
-# xs_procs = { # 'plot_weight' was calculated for xs values at mH=125GeV instead of 125.38GeV
-#     "ggH": 52.23,
-#     "VBF": 4.078,
-#     "WH": 1.442,
-#     "ZH": 0.944, # adding ggZH in
-#     "ttH": 0.57,
-# }
-# print("WH: ", 0.38268657 + 0.18495666 + 0.5992074900000001 + 0.28960362)
-# print("ZH: ", 0.0953093586 + 0.1887 + 0.6598804899999999 + 0.006838 + 0.01351 + 0.04776)
-# print("WH: ", 0.59328485+0.37886577+0.2867411412+0.1831100256)
-# print("ZH: ", 0.560266754+0.087945636+0.16028+0.094170117+0.014781978+0.02694)
-# exit()
 br = 0.002277
 categories = {
     1: "hadr_C1_LT_10", 
@@ -76,7 +68,7 @@ for era, lumi in eras_lumi.items():
             # print("sum_w: ", sum_w)
 
             # ToDo: I will have to add the new XS for WH and ZH here
-            total_yields[era][proc][cat] = xs*1000 * br * lumi * sum_w # since xs is in pb and lumi in fb^-1
+            total_yields[era][proc][cat] = xs*1000 * br * lumi * sum_w # since xs is in pb and lumi in fb^-1 
             # total_yields[era][proc][cat] = sum_w # just weights
 # print(total_yields)
 
@@ -93,7 +85,7 @@ for era, lumi in eras_lumi.items():
             continue
 
         df = pd.read_parquet(parquet_path, columns=[pred_label, "weight", "plot_weight"])
-        yields = df.groupby(pred_label)["plot_weight"].sum()
+        yields = df.groupby(pred_label)["plot_weight"].sum() # NOTE: comparing with plot_weight
         # yields = df.groupby(pred_label)["weight"].sum() # just weights
 
         for i, cat in categories.items():
@@ -101,6 +93,8 @@ for era, lumi in eras_lumi.items():
 # print(total_yields_exp)
 
 # --- Printing: RooWorkSpaces VS Parquet files ---
+# This is actually calculated yields VS plot_weight column in Parquet files (exp)
+# I have verified that weights from parquet transfer fine in trees2ws
 for era in eras_lumi.keys():
     print(f"\n{'='*150}")
     print(f"Era: {era}")

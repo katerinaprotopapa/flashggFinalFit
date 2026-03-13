@@ -153,10 +153,11 @@ globalXSBRMap['STXS']['THW_FWDH'] = {'mode':'tHW','factor':0.0106}
 globalXSBRMap['STXS']['THW'] = {'mode':'tHW','factor':0.9894}
 
 # kl analysis
+# XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
 globalXSBRMap['kl'] = od()
 globalXSBRMap['kl']['decay'] = {'mode':'hgg'}
 globalXSBRMap['kl']['ggH'] = {'mode':'constant', 'factor':51.96}
 globalXSBRMap['kl']['VBF'] = {'mode':'constant', 'factor':4.067}
 globalXSBRMap['kl']['WH'] = {'mode':'constant', 'factor':1.442}
-globalXSBRMap['kl']['ZH'] = {'mode':'constant', 'factor':0.936}
+globalXSBRMap['kl']['ZH'] = {'mode':'constant', 'factor':0.944} # adding ggZH in - without ggZH: 0.936
 globalXSBRMap['kl']['ttH'] = {'mode':'constant', 'factor':0.564}

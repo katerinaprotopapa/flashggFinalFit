@@ -79,7 +79,9 @@ def parquet_readin(dirpath):
     return pd.concat(dfs)
 
 merged = parquet_readin(opt.inputTreeFile)
-print('Nominal merged: ', merged)
+# print('Nominal merged: ', merged)
+# print("SumW - no bckg category: ", merged[merged["pred_C1_reco"]!=0]["weight"].sum()) # NOTE: I think WH and ZH are still wrong since I get less num of events than ttH
+# print("Total events: ", merged["plot_weight"].sum())
 
 # Auto-detect categories from .parquet files in inputTreeFile directory
 if cats == 'auto':
@@ -94,12 +96,14 @@ if cats == 'auto':
         leave()
     else:
         print(f"[INFO] Detected categories: {cats}")
-cats=list(cat_dict['cat_dict'].values()) # All categories are included
+cats=list(cat_dict['cat_dict'].values()) # we ensure that ALL categories are included
 
 merged['cat'] = merged[opt.catVar].map(str).map(cat_dict['cat_dict'])
 merged['type'] = 'nominal'
 
 data = merged.copy()
+# print("SumW - no bckg cat: ", data[data["pred_C1_reco"]!=0]["weight"].sum())
+# print("Total events: ", data["plot_weight"].sum())
 
 # Ensure STXS var
 if stxsVar not in data.columns:
@@ -116,7 +120,7 @@ theoryWeightColumns = {
 
 # ----- RooWorkspace Helpers -----
 def add_vars_to_workspace(ws, df, stxsVar):
-    intLumi = ROOT.RooRealVar("intLumi", "intLumi", 1000., 0., 999999999.) # initializing intLumi to 1000 CHECK AGAIN
+    intLumi = ROOT.RooRealVar("intLumi", "intLumi", 1000., 0., 999999999.) # initializing intLumi to 1000
     intLumi.setConstant(True)
     getattr(ws, 'import')(intLumi)
 
@@ -149,7 +153,6 @@ for stxsId in data[stxsVar].unique():
     df = data[data[stxsVar] == stxsId]
     if stxsVar == 'nosplit':
         stxsBin = opt.productionMode
-        print("stxsBin: ", stxsBin)
     else:
         stxsBin = flashggSTXSDict.get(int(stxsId), f"unknownSTXS_{stxsId}")
         if opt.productionMode == "wh":

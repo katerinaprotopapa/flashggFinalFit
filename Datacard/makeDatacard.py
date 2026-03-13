@@ -9,7 +9,7 @@ import pandas as pd
 import glob
 import pickle
 from collections import OrderedDict as od
-from systematics import theory_systematics, experimental_systematics, signal_shape_systematics
+from systematics_kl import theory_systematics, experimental_systematics, signal_shape_systematics
 
 def get_options():
   parser = OptionParser()
@@ -27,6 +27,7 @@ def get_options():
   parser.add_option('--doMCStatUncertainty', dest='doMCStatUncertainty', default=False, action="store_true", help="Add uncertainty for MC stats")
   parser.add_option('--doSTXSMerging', dest='doSTXSMerging', default=False, action="store_true", help="Calculate additional migrations uncertainties for merged STXS bins (for 'mnorm' tier in systematics)")
   parser.add_option('--doSTXSScaleCorrelationScheme', dest='doSTXSScaleCorrelationScheme', default=False, action="store_true", help="Partially de-correlate scale uncertainties for different phase space regions")
+  parser.add_option('--addRateandLumiScale', dest='addRateandLumiScale', default=True, help="Add rate parameter for ttH (shape) and lumi scale parameter")
   # For output
   parser.add_option('--saveDataFrame', dest='saveDataFrame', default=False, action="store_true", help='Save final dataframe as pkl file') 
   parser.add_option('--output', dest='output', default='Datacard', help='Datacard name') 
@@ -68,6 +69,11 @@ for f_pkl_name in pkl_files:
     else:
       df = df_raw
     data = pd.concat([data,df], ignore_index=True, axis=0, sort=False)
+  
+# --- ADD THIS HERE ---
+print(" --> [DEBUG] Unique processes found in Dataframe:")
+print(data['proc'].unique())
+# ---------------------
 
 for i in range(len(data)):
   print(f"{data.nominal_yield.iloc[i]} + of {data.proc.iloc[i]} in {data.cat.iloc[i]}")
@@ -109,6 +115,9 @@ if opt.doSystematics:
   print(" --> Adding theory systematics variations to dataFrame")
   # Add constant systematics to dataFrame
   for s in theory_systematics:
+    # ADD THIS:
+    print(f" --> [DEBUG] Processing systematic: {s['name']}") 
+
     if s['type'] == 'constant': 
       data = addConstantSyst(data,s,opt)
       print('theory')
@@ -185,7 +194,7 @@ print(" ........................................................................
 fdataName = "%s.txt"%opt.output
 print(" --> Writing to datacard file: %s"%fdataName)
 # print(data.weight_DummyDown_yield)
-from tools.writeToDatacard import writePreamble, writeProcesses, writeSystematic, writeMCStatUncertainty, writePdfIndex, writeBreak
+from tools.writeToDatacard import writePreamble, writeProcesses, writeSystematic, writeMCStatUncertainty, writePdfIndex, writeRateParams, writeLumiParams, writeBreak
 fdata = open(fdataName,"w")
 if not writePreamble(fdata,opt): 
   print(" --> [ERROR] in writing preamble. Leaving...")
@@ -198,7 +207,7 @@ if opt.doSystematics:
     if not writeSystematic(fdata,data,syst,opt):
       print(" --> [ERROR] in writing systematic %s (experiment). Leaving"%syst['name'])
       leave()
-  writeBreak(fdata)
+  # writeBreak(fdata)
   for syst in theory_systematics:
     if not writeSystematic(fdata,data,syst,opt,stxsMergeScheme=STXSMergingScheme,scaleCorrScheme=STXSScaleCorrelationScheme):
       print(" --> [ERROR] in writing systematic %s (theory). Leaving"%syst['name'])
@@ -213,6 +222,9 @@ if opt.doMCStatUncertainty:
   if not writeMCStatUncertainty(fdata,data,opt):
     print(" --> [ERROR] in writing MC stat uncertainty systematic. Leaving")
     leave()
+if opt.addRateandLumiScale: # ttH - kl analysis
+  writeRateParams(fdata)
+  writeLumiParams(fdata)
 writeBreak(fdata)
 if not writePdfIndex(fdata,data,opt):
   print(" --> [ERROR] in writing pdf indices. Leaving...")

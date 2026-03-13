@@ -24,7 +24,7 @@
         "pois":"k_lambda",
         "fits":"profile1D:syst:k_lambda",
         "points":"100:20",
-        "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-60,100 --freezeParameters MH --saveSpecifiedNuis all"
+        "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-60,100 --setParameters lumi_scale=8.65 --freezeParameters MH,lumi_scale --saveSpecifiedNuis all"
     }
 
 }
