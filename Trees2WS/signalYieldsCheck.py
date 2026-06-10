@@ -8,12 +8,15 @@ import pickle
 import pandas as pd
 
 # Base directory of the Workspaces (for all eras)
-root_dir = "/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/flashggFinalFit/RooWorkspaces_6Feb2026/signal"
+root_dir = "/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/flashggFinalFit/RooWorkspaces/C1_reco/signal"
 #!/usr/bin/env python3
 
 eras_lumi = {
-    "preEE": 8.00,
-    "postEE": 26.70,
+    "preEE": 7.99,
+    "postEE": 26.68,
+    "preBPix": 17.96,
+    "postBPix": 9.68,
+    "2024": 109.95
 }
 xs_procs = { # XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
     "ggH": 51.96,
@@ -24,19 +27,44 @@ xs_procs = { # XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-
 }
 br = 0.002277
 categories = {
-    1: "hadr_C1_LT_10", 
-    2: "hadr_C1_10_29", 
-    3: "hadr_C1_29_48", 
-    4: "hadr_C1_48_71", 
-    5: "hadr_C1_GT_71",
-    6: "lept_C1_LT_10", 
-    7: "lept_C1_10_29", 
-    8: "lept_C1_29_48", 
-    9: "lept_C1_48_71", 
-    10: "lept_C1_GT_71"
+    1: "hadr_C1_LT_20",
+    2: "hadr_C1_20_40",
+    3: "hadr_C1_40_60",
+    4: "hadr_C1_60_80",
+    5: "hadr_C1_GT_80",
+    6: "lept_C1_LT_15",
+    7: "lept_C1_15_30",
+    8: "lept_C1_30_45",
+    9: "lept_C1_45_60",
+    10: "lept_C1_60_75",
+    11: "lept_C1_GT_75"
 }
 total_yields = {era: {proc: {cat: 0.0 for cat in categories.values()} for proc in xs_procs} for era in eras_lumi.keys()}
 
+### 1) ###
+# --- Printing: "plot_weight" is as expected check in Parquet files ---
+# # Preprocessing - full MC df
+# path_df_preprocess = "/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/preprocessing/saves/df_preprocess_22_23_24_MC.pkl"
+# with open(path_df_preprocess, "rb") as f:
+#         df_preprocess = pickle.load(f)
+# # print("df_preprocess: ", df_preprocess)
+
+# Parquet files
+syst = "nominal"
+pred_label = "pred_C1_reco"
+total_yields_exp = {era: {proc: {cat: 0.0 for cat in categories.values()} for proc in xs_procs} for era in eras_lumi.keys()}
+parquet_dir = "/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/final_fits/MC/"
+for era, lumi in eras_lumi.items():
+    for proc, xs in xs_procs.items():
+        parquet_path = os.path.join(parquet_dir, era, proc, syst, f"{proc}_{era}_{syst}.parquet")
+        if not os.path.exists(parquet_path):
+            print(f"Parquet file not found: {parquet_path}")
+            continue
+        df = pd.read_parquet(parquet_path)
+        df["plot_weight_check"] = xs*1000 * br * lumi * df["weight"]
+        print(df[["era", "sample_name", "weight", "plot_weight", "plot_weight_check"]])
+
+### 2) ###
 # --- RooWorkSpaces ---
 for era, lumi in eras_lumi.items():
     for proc, xs in xs_procs.items():
@@ -124,26 +152,3 @@ for era in eras_lumi.keys():
             row += f" {val_ws:7.5f} {val_exp:7.5f} {ratio:6.3f} |"
         print(row)
 print(f"\n{'='*150}")
-
-
-# --- Printing: "plot_weight" is as expected check in Parquet files ---
-# Preprocessing - full MC df
-path_df_preprocess = "/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/preprocessing/saves/channels/ttH_classifier_df_preprocess_2022_channels.pkl"
-with open(path_df_preprocess, "rb") as f:
-        df_preprocess = pickle.load(f)
-# print("df_preprocess: ", df_preprocess)
-
-# Parquet files
-syst = "nominal"
-pred_label = "pred_C1_reco"
-total_yields_exp = {era: {proc: {cat: 0.0 for cat in categories.values()} for proc in xs_procs} for era in eras_lumi.keys()}
-parquet_dir = "/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/final_fits/MC/"
-for era, lumi in eras_lumi.items():
-    for proc, xs in xs_procs.items():
-        parquet_path = os.path.join(parquet_dir, era, proc, syst, f"{proc}_{era}_{syst}.parquet")
-        if not os.path.exists(parquet_path):
-            print(f"Parquet file not found: {parquet_path}")
-            continue
-        df = pd.read_parquet(parquet_path)
-        df["plot_weight_check"] = xs*1000 * br * lumi * df["weight"]
-        print(df[["era", "sample_name", "weight", "plot_weight", "plot_weight_check"]])
