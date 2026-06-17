@@ -21,6 +21,6 @@ signalScriptCfg = {
 
   # Job submission options
   'batch':'condor', # ['condor','SGE','IC','local']
-  'queue':'espresso',
+  'queue':'3600',
 
 }
