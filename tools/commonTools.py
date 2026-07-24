@@ -93,19 +93,19 @@ def massFromFileName(_fileName):
 
 # Function for converting STXS process to production mode in dataset name
 procToDataMap = od()
-procToDataMap['GG2H'] = 'ggh'
+# procToDataMap['GG2H'] = 'ggh'
 procToDataMap['VBF'] = 'VBF'
 procToDataMap['WH2HQQ'] = 'wh'
-procToDataMap['ZH2HQQ'] = 'zh'
+# procToDataMap['ZH2HQQ'] = 'zh'
 procToDataMap['QQ2HLNU'] = 'wh'
 procToDataMap['QQ2HLL'] = 'zh'
-procToDataMap['TTH'] = 'tth'
+# procToDataMap['TTH'] = 'tth'
 procToDataMap['BBH'] = 'bbh'
 procToDataMap['THQ'] = 'thq'
 procToDataMap['THW'] = 'thw'
-procToDataMap['GG2HQQ'] = 'ggzh'
-procToDataMap['GG2HLL'] = 'ggzh'
-procToDataMap['GG2HNUNU'] = 'ggzh'
+# procToDataMap['GG2HQQ'] = 'ggzh'
+# procToDataMap['GG2HLL'] = 'ggzh'
+# procToDataMap['GG2HNUNU'] = 'ggzh'
 def procToData( _proc ):
   k = _proc.split("_")[0]
   if k in procToDataMap: _proc = re.sub( k, procToDataMap[k], _proc )
@@ -118,20 +118,20 @@ def dataToProc( _d ):
 
 # Mapping of process to name in datacard
 procToDatacardNameMap = od()
-procToDatacardNameMap['GG2H'] = "ggH"
+# procToDatacardNameMap['GG2H'] = "ggH"
 procToDatacardNameMap['VBF'] = "qqH"
 procToDatacardNameMap['WH2HQQ'] = "WH_had"
-procToDatacardNameMap["ZH2HQQ"] = "ZH_had"
+# procToDatacardNameMap["ZH2HQQ"] = "ZH_had"
 procToDatacardNameMap["QQ2HLNU"] = "WH_lep"
 procToDatacardNameMap["QQ2HLL"] = "ZH_lep"
-procToDatacardNameMap["TTH"] = "ttH"
+# procToDatacardNameMap["TTH"] = "ttH"
 procToDatacardNameMap["BBH"] = "bbH"
 procToDatacardNameMap["THQ"] = "tHq"
 procToDatacardNameMap["THW"] = "tHW"
 procToDatacardNameMap["TH"] = "tHq"
-procToDatacardNameMap["GG2HQQ"] = "ggZH_had"
-procToDatacardNameMap["GG2HLL"] = "ggZH_ll"
-procToDatacardNameMap["GG2HNUNU"] = "ggZH_nunu"
+# procToDatacardNameMap["GG2HQQ"] = "ggZH_had"
+# procToDatacardNameMap["GG2HLL"] = "ggZH_ll"
+# procToDatacardNameMap["GG2HNUNU"] = "ggZH_nunu"
 
 def procToDatacardName( _proc ):
   k = _proc.split("_")[0]

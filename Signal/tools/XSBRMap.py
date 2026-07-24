@@ -152,12 +152,42 @@ globalXSBRMap['STXS']['THQ'] = {'mode':'tHq','factor':0.9721}
 globalXSBRMap['STXS']['THW_FWDH'] = {'mode':'tHW','factor':0.0106}
 globalXSBRMap['STXS']['THW'] = {'mode':'tHW','factor':0.9894}
 
-# kl analysis
+# kl analysis - C1reco
 # XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
-globalXSBRMap['kl'] = od()
-globalXSBRMap['kl']['decay'] = {'mode':'hgg'}
-globalXSBRMap['kl']['ggH'] = {'mode':'constant', 'factor':51.96}
-globalXSBRMap['kl']['VBF'] = {'mode':'constant', 'factor':4.067}
-globalXSBRMap['kl']['WH'] = {'mode':'constant', 'factor':1.442}
-globalXSBRMap['kl']['ZH'] = {'mode':'constant', 'factor':0.944} # adding ggZH in - without ggZH: 0.936
-globalXSBRMap['kl']['ttH'] = {'mode':'constant', 'factor':0.564}
+# Previous (inclusive per-mode) values, kept for reference
+# globalXSBRMap['kl_C1reco'] = od()
+# globalXSBRMap['kl_C1reco']['decay'] = {'mode':'hgg'}
+# globalXSBRMap['kl_C1reco']['ggH'] = {'mode':'constant', 'factor':51.96}
+# globalXSBRMap['kl_C1reco']['VBF'] = {'mode':'constant', 'factor':4.067}
+# globalXSBRMap['kl_C1reco']['WH'] = {'mode':'constant', 'factor':1.442}
+# globalXSBRMap['kl_C1reco']['ZH'] = {'mode':'constant', 'factor':0.944} # adding ggZH in - without ggZH: 0.936
+# globalXSBRMap['kl_C1reco']['ttH'] = {'mode':'constant', 'factor':0.564}
+
+globalXSBRMap['kl_C1reco'] = od()
+globalXSBRMap['kl_C1reco']['decay'] = {'mode':'hgg'}
+globalXSBRMap['kl_C1reco']['GG2H'] = {'mode':'constant', 'factor':52.23}
+globalXSBRMap['kl_C1reco']['GG2HLL'] = {'mode':'constant', 'factor':0.01492464}
+globalXSBRMap['kl_C1reco']['GG2HNUNU'] = {'mode':'constant', 'factor':0.0272}
+globalXSBRMap['kl_C1reco']['GG2HQQ'] = {'mode':'constant', 'factor':0.09507896}
+globalXSBRMap['kl_C1reco']['TTH'] = {'mode':'constant', 'factor':0.57}
+globalXSBRMap['kl_C1reco']['VBF'] = {'mode':'constant', 'factor':4.078}
+globalXSBRMap['kl_C1reco']['WMINUSH'] = {'mode':'constant', 'factor':0.56764}
+globalXSBRMap['kl_C1reco']['WMINUSH2HLNU'] = {'mode':'constant', 'factor':0.18495666}
+globalXSBRMap['kl_C1reco']['WMINUSH2HQQ'] = {'mode':'constant', 'factor':0.38268657}
+globalXSBRMap['kl_C1reco']['WPLUSH'] = {'mode':'constant', 'factor':0.88881}
+globalXSBRMap['kl_C1reco']['WPLUSH2HLNU'] = {'mode':'constant', 'factor':0.28960362}
+globalXSBRMap['kl_C1reco']['WPLUSH2HQQ'] = {'mode':'constant', 'factor':0.59920749}
+globalXSBRMap['kl_C1reco']['ZH'] = {'mode':'constant', 'factor':0.944}
+globalXSBRMap['kl_C1reco']['ZH2HQQ'] = {'mode':'constant', 'factor':0.564810969}
+globalXSBRMap['kl_C1reco']['ZH2HLL'] = {'mode':'constant', 'factor':0.088658946}
+globalXSBRMap['kl_C1reco']['ZH2HNUNU'] = {'mode':'constant', 'factor':0.16158}
+
+# kl analysis - pt
+# XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
+globalXSBRMap['kl_pt'] = od()
+globalXSBRMap['kl_pt']['decay'] = {'mode':'hgg'}
+globalXSBRMap['kl_pt']['ggH'] = {'mode':'constant', 'factor':51.96}
+globalXSBRMap['kl_pt']['VBF'] = {'mode':'constant', 'factor':4.067}
+globalXSBRMap['kl_pt']['WH'] = {'mode':'constant', 'factor':1.442}
+globalXSBRMap['kl_pt']['ZH'] = {'mode':'constant', 'factor':0.944} # adding ggZH in - without ggZH: 0.936
+globalXSBRMap['kl_pt']['ttH'] = {'mode':'constant', 'factor':0.564}

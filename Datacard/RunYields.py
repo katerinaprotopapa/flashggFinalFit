@@ -61,6 +61,10 @@ options['bkgModelExt'] = opt.bkgModelExt
 options['modeOpts'] = ''
 if opt.mergeYears:  options['modeOpts'] += ' --mergeYears'
 if opt.skipBkg: options['modeOpts'] += ' --skipBkg'
+if opt.sigModelWSDir: options['modeOpts'] += ' --sigModelWSDir %s'%opt.sigModelWSDir
+if opt.sigModelExt: options['modeOpts'] += ' --sigModelExt %s'%opt.sigModelExt
+if opt.bkgModelWSDir: options['modeOpts'] += ' --bkgModelWSDir %s'%opt.bkgModelWSDir
+if opt.bkgModelExt: options['modeOpts'] += ' --bkgModelExt %s'%opt.bkgModelExt
 if opt.bkgScaler != 1.: options['modeOpts'] += ' --bkgScaler %.4f'%opt.bkgScaler
 if opt.skipZeroes: options['modeOpts'] += ' --skipZeroes'
 if opt.skipCOWCorr: options['modeOpts'] += ' --skipCOWCorr'

@@ -25,8 +25,7 @@ def get_options():
     parser.add_option('--year', dest='year', default="2022", help='Year')
     parser.add_option('--doNNLOPS', dest='doNNLOPS', default=False, action="store_true", help='Add NNLOPS weight')
     parser.add_option('--doSystematics', dest='doSystematics', default=False, action="store_true", help='Add systematics')
-    parser.add_option('--catVar', dest='catVar', default="pred_C1_reco", help='Column name for categorization')
-    parser.add_option('--categorisationConfig',default='config_categories_kl.json')
+    parser.add_option('--categorisationConfig', default="", help='Input config categories json')
     parser.add_option('-v',default=False,action="store_true")
     return parser.parse_args()
 
@@ -51,6 +50,8 @@ systematicsVars  = _cfg['systematicsVars']
 theoryWeightContainers = _cfg['theoryWeightContainers']
 systematics      = _cfg['systematics']
 cats             = _cfg['cats']
+catVar           = _cfg['catVar']
+binning          = _cfg['binning']
 # If STXS var is not defined, disable splitting
 if not stxsVar:
     opt.doSTXSSplitting = False
@@ -90,7 +91,7 @@ if cats == 'auto':
         leave()
     with open(opt.categorisationConfig, "r") as f:
         cat_dict = json.load(f)
-    cats = [cat_dict['cat_dict'][str(cat)] for cat in merged[opt.catVar].unique() if cat!=0]
+    cats = [cat_dict['cat_dict'][str(cat)] for cat in merged[catVar].unique() if cat!=0]
     if not cats:
         print(f"[ERROR] No categories are detected in '{opt.inputTreeFile}' parquet file")
         leave()
@@ -98,7 +99,7 @@ if cats == 'auto':
         print(f"[INFO] Detected categories: {cats}")
 cats=list(cat_dict['cat_dict'].values()) # we ensure that ALL categories are included
 
-merged['cat'] = merged[opt.catVar].map(str).map(cat_dict['cat_dict'])
+merged['cat'] = merged[catVar].map(str).map(cat_dict['cat_dict'])
 merged['type'] = 'nominal'
 
 data = merged.copy()
@@ -169,7 +170,7 @@ for stxsId in data[stxsVar].unique():
         elif opt.productionMode == "thw":
             stxsBin = stxsBin.replace("TH", "THW")
 
-    output_dir = f"{opt.inputTreeFile}/ws_{stxsBin}"
+    output_dir = f"{opt.inputTreeFile}/{binning}/ws_{stxsBin}"
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, f"output_{stxsBin}_M{opt.inputMass}_pythia8_{stxsBin}.root")
     print(f"[INFO] Creating workspace: {output_file}")
@@ -243,7 +244,7 @@ for stxsId in data[stxsVar].unique():
                     syst_name = f"{syst}{direction}"
                 
                     merged_sys = parquet_readin_syst(opt.inputTreeFile, syst, direction)
-                    merged_sys['cat'] = merged_sys[opt.catVar].map(str).map(cat_dict['cat_dict'])
+                    merged_sys['cat'] = merged_sys[catVar].map(str).map(cat_dict['cat_dict'])
                     merged_sys = merged_sys[merged_sys['cat'] == cat]
                     sdf = merged_sys
 

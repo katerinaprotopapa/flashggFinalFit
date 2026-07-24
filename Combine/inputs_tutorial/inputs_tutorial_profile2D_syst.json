@@ -4,5 +4,11 @@
         "fits":"profile2D:syst:r_ggH,r_VBF",
         "points":"400:40",
         "fit_opts":"--saveInactivePOI 1 --setParameterRanges r_ggH=0,3:r_VBF=0,10 --saveSpecifiedNuis all --freezeParameters MH"
+    },
+    "muttH_klambda":{
+        "pois":"k_lambda,mu_ttH",
+        "fits":"profile2D:syst:k_lambda,mu_ttH",
+        "points":"600:60",
+        "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-30,120:mu_ttH=0,4 --setParameters lumi_scale=1.74 --freezeParameters MH,lumi_scale --saveSpecifiedNuis all"
     }
 }

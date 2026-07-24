@@ -23,7 +23,7 @@ def get_options():
     parser.add_option('--outputWSDir',dest='outputWSDir', default=None, help='Output dir (default is same as input dir)')
     parser.add_option('--applyMassCut',dest='applyMassCut', default=False, action="store_true", help='Apply cut on CMS_hgg_mass')
     parser.add_option('--massCutRange',dest='massCutRange', default='100,180', help='CMS_hgg_mass cut range')
-    parser.add_option('--categorisationConfig',default='config_categories_kl.json')
+    parser.add_option('--categorisationConfig',default="", help='Input config categories json')
     return parser.parse_args()
 
 (opt, args) = get_options()
@@ -43,7 +43,8 @@ inputTreeDir     = _cfg['inputTreeDir'].rstrip('/')
 dataVars         = _cfg['dataVars']
 stxsVar          = _cfg['stxsVar']
 cats             = _cfg['cats']
-pred             = _cfg['pred']
+catVar           = _cfg['catVar']
+binning          = _cfg['binning']
 
 with open(opt.categorisationConfig, "r") as f:
         cat_dict = json.load(f)
@@ -60,7 +61,7 @@ if cats == 'auto':
         leave()
 
     cats = []
-    for cat in merged[pred].unique():
+    for cat in merged[catVar].unique():
         if cat!=0:
             cats.append(cat_dict['cat_dict'][str(cat)])
 
@@ -75,7 +76,7 @@ cats=list(cat_dict['cat_dict'].values() )# ensure ALL cats are included
 # Combine data
 data = pd.DataFrame()
 
-merged['cat'] = merged[pred].map(str).map(cat_dict['cat_dict'])
+merged['cat'] = merged[catVar].map(str).map(cat_dict['cat_dict'])
 data=merged.copy()
 # ~~~~~~~ RooWorkspace Helpers ~~~~~~~
 def add_vars_to_workspace(ws, df, stxsVar):
@@ -116,7 +117,7 @@ for stxsId in data[stxsVar].unique():
 
     
 
-    output_dir = f"{opt.inputTreeFile}/ws_data"
+    output_dir = f"{opt.inputTreeFile}/{binning}/ws_data"
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, f"allData_data.root")
     print(f"[INFO] Creating workspace: {output_file}")

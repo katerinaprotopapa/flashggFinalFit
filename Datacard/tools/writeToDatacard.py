@@ -239,7 +239,7 @@ def writePdfIndex(f,d,options):
 
 def writeRateParams(f,):
   # Add rateParam (shape-only effect for kl)
-  f.write("mu_ttH rateParam * ttH_* 1. [-1,3]\n")  # Add this line for the rateParam
+  f.write("mu_ttH rateParam * TTH_* 1. [-5,4]\n")  # Add this line for the rateParam
 
 def writeLumiParams(f,):
   # Add lumi-scale parameter

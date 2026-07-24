@@ -4,6 +4,11 @@
         "pdf_Higgs_ggH":1.019,
         "alphaS_ggH":1.026
     },
+    "GG2H":{
+        "QCDscale_ggH":[1.047,0.931],
+        "pdf_Higgs_ggH":1.019,
+        "alphaS_ggH":1.026
+    },
     "ggH_FWDH":{
         "QCDscale_ggH":[1.047,0.931],
         "pdf_Higgs_ggH":1.019,

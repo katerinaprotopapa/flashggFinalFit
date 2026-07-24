@@ -20,11 +20,18 @@
         "fit_opts":"--saveInactivePOI 1 --setParameterRanges r_ttH=-3,3 --saveSpecifiedNuis all --freezeParameters MH"
     },
 
-    "k_lambda":{
+    "kl_C1reco":{
+        "pois":"k_lambda",
+        "fits":"profile1D:syst:k_lambda+bestfit:syst:k_lambda",
+        "points":"67:20+1",
+        "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-20,49.3 --setParameters lumi_scale=1.74 --freezeParameters MH,lumi_scale --saveSpecifiedNuis all+--saveInactivePOI 1 --saveWorkspace --setParameterRanges k_lambda=-20,49.3 --setParameters lumi_scale=1.74 --freezeParameters MH,lumi_scale --saveSpecifiedNuis all"
+    },
+
+    "kl_pt":{
         "pois":"k_lambda",
         "fits":"profile1D:syst:k_lambda",
         "points":"100:20",
-        "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-60,100 --setParameters lumi_scale=8.65 --freezeParameters MH,lumi_scale --saveSpecifiedNuis all"
+        "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-20,50 --setParameters lumi_scale=8.65 --freezeParameters MH,lumi_scale --saveSpecifiedNuis all"
     }
 
 }

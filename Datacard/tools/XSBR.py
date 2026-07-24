@@ -144,14 +144,33 @@ XSBRMap['STXS']['THQ'] = {'mode':'tHq','factor':0.9721}
 XSBRMap['STXS']['THW_FWDH'] = {'mode':'tHW','factor':0.0106}
 XSBRMap['STXS']['THW'] = {'mode':'tHW','factor':0.9894}
 
-# kl analysis
-XSBRMap['kl'] = od()
-XSBRMap['kl']['decay'] = {'mode':'hgg'}
-XSBRMap['kl']['ggH'] = {'mode':'constant', 'factor':51.96}
-XSBRMap['kl']['VBF'] = {'mode':'constant', 'factor':4.067}
-XSBRMap['kl']['WH'] = {'mode':'constant', 'factor':1.442}
-XSBRMap['kl']['ZH'] = {'mode':'constant', 'factor':0.936}
-XSBRMap['kl']['ttH'] = {'mode':'constant', 'factor':0.564}
+# kl analysis - C1reco
+# XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
+XSBRMap['kl_C1reco'] = od()
+XSBRMap['kl_C1reco']['decay'] = {'mode':'hgg'}
+XSBRMap['kl_C1reco']['GG2H'] = {'mode':'constant', 'factor':52.23}
+XSBRMap['kl_C1reco']['TTH'] = {'mode':'constant', 'factor':0.57}
+XSBRMap['kl_C1reco']['VBF'] = {'mode':'constant', 'factor':4.078}
+XSBRMap['kl_C1reco']['WMINUSH'] = {'mode':'constant', 'factor':0.56764}
+XSBRMap['kl_C1reco']['WMINUSH2HLNU'] = {'mode':'constant', 'factor':0.18495666}
+XSBRMap['kl_C1reco']['WMINUSH2HQQ'] = {'mode':'constant', 'factor':0.38268657}
+XSBRMap['kl_C1reco']['WPLUSH'] = {'mode':'constant', 'factor':0.88881}
+XSBRMap['kl_C1reco']['WPLUSH2HLNU'] = {'mode':'constant', 'factor':0.28960362}
+XSBRMap['kl_C1reco']['WPLUSH2HQQ'] = {'mode':'constant', 'factor':0.59920749}
+XSBRMap['kl_C1reco']['ZH'] = {'mode':'constant', 'factor':0.944} # adding ggZH in - without ggZH: 0.936
+XSBRMap['kl_C1reco']['ZH2HQQ'] = {'mode':'constant', 'factor':0.564810969}
+XSBRMap['kl_C1reco']['ZH2HLL'] = {'mode':'constant', 'factor':0.088658946}
+XSBRMap['kl_C1reco']['ZH2HNUNU'] = {'mode':'constant', 'factor':0.16158}
+
+# kl analysis - pt
+# XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
+XSBRMap['kl_pt'] = od()
+XSBRMap['kl_pt']['decay'] = {'mode':'hgg'}
+XSBRMap['kl_pt']['ggH'] = {'mode':'constant', 'factor':51.96}
+XSBRMap['kl_pt']['VBF'] = {'mode':'constant', 'factor':4.067}
+XSBRMap['kl_pt']['WH'] = {'mode':'constant', 'factor':1.442}
+XSBRMap['kl_pt']['ZH'] = {'mode':'constant', 'factor':0.944} # adding ggZH in - without ggZH: 0.936
+XSBRMap['kl_pt']['ttH'] = {'mode':'constant', 'factor':0.564}
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Functions for loading XS*BR below

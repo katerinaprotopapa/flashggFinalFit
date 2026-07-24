@@ -241,38 +241,107 @@ globalReplacementMap["STXS"]["catRVMap"]["RECO_WH_LEP_PTV_GT150_Tag0"] = "RECO_W
 globalReplacementMap["STXS"]["catRVMap"]["RECO_ZH_LEP_Tag0"] = "RECO_ZH_LEP_Tag0"
 globalReplacementMap["STXS"]["catRVMap"]["RECO_ZH_LEP_Tag1"] = "RECO_ZH_LEP_Tag1"
 
-# kl analysis
-globalReplacementMap['kl'] = od()
+# kl analysis - C1reco
+globalReplacementMap['kl_C1reco'] = od()
 # For WRONG VERTEX SCENARIO:
 #  * single proc x cat for wrong vertex since for dZ > 1cm shape independent of proc x cat
 #  * use proc x cat with highest number of WV events
-globalReplacementMap['kl']['procWV'] = "ttH"
-globalReplacementMap['kl']['catWV'] = "hadr_C1_10_29"
+globalReplacementMap['kl_C1reco']['procWV'] = "TTH"
+globalReplacementMap['kl_C1reco']['catWV'] = "hadr_C1_10_29"
 # For RIGHT VERTEX SCENARIO:
 #  * default mapping is to use diagonal process from given category 
 #  * if few events in diagonal process then may need to change the category aswell (see catRVMap)
 #  * map must contain entry for all cats being processed (for replacement proc and cat)
-globalReplacementMap['kl']['procRVMap'] = od()
-globalReplacementMap["kl"]["procRVMap"]["hadr_C1_LT_10"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["hadr_C1_10_29"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["hadr_C1_29_48"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["hadr_C1_48_71"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["hadr_C1_GT_71"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["lept_C1_LT_10"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["lept_C1_10_29"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["lept_C1_29_48"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["lept_C1_48_71"] = "ttH"
-globalReplacementMap["kl"]["procRVMap"]["lept_C1_GT_71"] = "ttH"
+# Previous (boundary-based) categorisation, kept for reference
+# globalReplacementMap['kl_C1reco']['procRVMap'] = od()
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_LT_20"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_20_40"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_40_60"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_60_80"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_GT_80"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_LT_15"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_15_30"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_30_45"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_45_60"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_60_75"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_GT_75"] = "ttH"
+# globalReplacementMap["kl_C1reco"]["catRVMap"] = od()
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_LT_20"] = "hadr_C1_LT_20"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_20_40"] = "hadr_C1_20_40"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_40_60"] = "hadr_C1_40_60"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_60_80"] = "hadr_C1_60_80"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_GT_80"] = "hadr_C1_GT_80"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_LT_15"] = "lept_C1_LT_15"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_15_30"] = "lept_C1_15_30"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_30_45"] = "lept_C1_30_45"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_45_60"] = "lept_C1_45_60"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_60_75"] = "lept_C1_60_75"
+# globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_GT_75"] = "lept_C1_GT_75"
+
+globalReplacementMap['kl_C1reco']['procRVMap'] = od()
+globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_LT_10"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_10_21"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_21_30"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_30_36"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_36_42"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_42_63"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["hadr_C1_GT_63"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_LT_15"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_15_30"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_30_43"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_43_63"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_63_70"] = "TTH"
+globalReplacementMap["kl_C1reco"]["procRVMap"]["lept_C1_GT_70"] = "TTH"
+
 # Replacement category for RV fit
-globalReplacementMap["kl"]["catRVMap"] = od()
-globalReplacementMap["kl"]["catRVMap"]["hadr_C1_LT_10"] = "hadr_C1_LT_10"
-globalReplacementMap["kl"]["catRVMap"]["hadr_C1_10_29"] = "hadr_C1_10_29"
-globalReplacementMap["kl"]["catRVMap"]["hadr_C1_29_48"] = "hadr_C1_29_48"
-globalReplacementMap["kl"]["catRVMap"]["hadr_C1_48_71"] = "hadr_C1_48_71"
-globalReplacementMap["kl"]["catRVMap"]["hadr_C1_GT_71"] = "hadr_C1_GT_71"
-globalReplacementMap["kl"]["catRVMap"]["lept_C1_LT_10"] = "lept_C1_LT_10"
-globalReplacementMap["kl"]["catRVMap"]["lept_C1_10_29"] = "lept_C1_10_29"
-globalReplacementMap["kl"]["catRVMap"]["lept_C1_29_48"] = "lept_C1_29_48"
-globalReplacementMap["kl"]["catRVMap"]["lept_C1_48_71"] = "lept_C1_48_71"
-globalReplacementMap["kl"]["catRVMap"]["lept_C1_GT_71"] = "lept_C1_GT_71"
+globalReplacementMap["kl_C1reco"]["catRVMap"] = od()
+globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_LT_10"] = "hadr_C1_LT_10"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_10_21"] = "hadr_C1_10_21"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_21_30"] = "hadr_C1_21_30"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_30_36"] = "hadr_C1_30_36"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_36_42"] = "hadr_C1_36_42"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_42_63"] = "hadr_C1_42_63"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["hadr_C1_GT_63"] = "hadr_C1_GT_63"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_LT_15"] = "lept_C1_LT_15"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_15_30"] = "lept_C1_15_30"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_30_43"] = "lept_C1_30_43"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_43_63"] = "lept_C1_43_63"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_63_70"] = "lept_C1_63_70"
+globalReplacementMap["kl_C1reco"]["catRVMap"]["lept_C1_GT_70"] = "lept_C1_GT_70"
+
+# kl analysis - pt
+globalReplacementMap['kl_pt'] = od()
+# For WRONG VERTEX SCENARIO:
+#  * single proc x cat for wrong vertex since for dZ > 1cm shape independent of proc x cat
+#  * use proc x cat with highest number of WV events
+globalReplacementMap['kl_pt']['procWV'] = "ttH"
+globalReplacementMap['kl_pt']['catWV'] = "hadr_C1_10_29"
+# For RIGHT VERTEX SCENARIO:
+#  * default mapping is to use diagonal process from given category 
+#  * if few events in diagonal process then may need to change the category aswell (see catRVMap)
+#  * map must contain entry for all cats being processed (for replacement proc and cat)
+globalReplacementMap['kl_pt']['procRVMap'] = od()
+globalReplacementMap["kl_pt"]["procRVMap"]["hadr_pt_LT_60"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["hadr_pt_60_120"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["hadr_pt_120_200"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["hadr_pt_200_300"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["hadr_pt_GT_300"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["lept_pt_LT_60"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["lept_pt_60_120"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["lept_pt_120_200"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["lept_pt_200_300"] = "ttH"
+globalReplacementMap["kl_pt"]["procRVMap"]["lept_pt_GT_300"] = "ttH"
+# Replacement category for RV fit
+globalReplacementMap["kl_pt"]["catRVMap"] = od()
+globalReplacementMap["kl_pt"]["catRVMap"]["hadr_pt_LT_60"] = "hadr_pt_LT_60"
+globalReplacementMap["kl_pt"]["catRVMap"]["hadr_pt_60_120"] = "hadr_pt_60_120"
+globalReplacementMap["kl_pt"]["catRVMap"]["hadr_pt_120_200"] = "hadr_pt_120_200"
+globalReplacementMap["kl_pt"]["catRVMap"]["hadr_pt_200_300"] = "hadr_pt_200_300"
+globalReplacementMap["kl_pt"]["catRVMap"]["hadr_pt_GT_300"] = "hadr_pt_GT_300"
+globalReplacementMap["kl_pt"]["catRVMap"]["lept_pt_LT_60"] = "lept_pt_LT_60"
+globalReplacementMap["kl_pt"]["catRVMap"]["lept_pt_60_120"] = "lept_pt_60_120"
+globalReplacementMap["kl_pt"]["catRVMap"]["lept_pt_120_200"] = "lept_pt_120_200"
+globalReplacementMap["kl_pt"]["catRVMap"]["lept_pt_200_300"] = "lept_pt_200_300"
+globalReplacementMap["kl_pt"]["catRVMap"]["lept_pt_GT_300"] = "lept_pt_GT_300"
+
 

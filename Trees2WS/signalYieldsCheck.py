@@ -18,27 +18,74 @@ eras_lumi = {
     "postBPix": 9.68,
     "2024": 109.95
 }
-xs_procs = { # XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
-    "ggH": 51.96,
-    "VBF": 4.067,
-    "WH": 1.442,
-    "ZH": 0.944, # 0.936, # since adding ggZH in
-    "ttH": 0.564,
+# xs_procs = { # XS values for mH=125.38GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
+#     "ggH": 51.96,
+#     "VBF": 4.067,
+#     "WH": 1.442,
+#     "ZH": 0.944, # 0.936, # since adding ggZH in
+#     "ttH": 0.564,
+# }
+xs_procs = { # XS values for mH=125GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
+    "GG2H": 52.23,
+    "GG2HLL": 0.01492464,
+    "GG2HNUNU": 0.0272,
+    "GG2HQQ": 0.09507896,
+    "TTH": 0.57,
+    "VBF": 4.078,
+    "WMINUSH": 0.56764,
+    "WMINUSH2HLNU": 0.18495666,
+    "WMINUSH2HQQ": 0.38268657,
+    "WPLUSH": 0.88881,
+    "WPLUSH2HLNU": 0.28960362,
+    "WPLUSH2HQQ": 0.59920749,
+    "ZH": 0.81505, # not including ggZH since I can see them for 2024: GG2HLL, GG2HNUNU, GG2HQQ
+    "ZH2HQQ": 0.564810969,
+    "ZH2HLL": 0.088658946,
+    "ZH2HNUNU": 0.16158,
+
 }
 br = 0.002277
+# categories = {
+#     1: "hadr_C1_LT_20",
+#     2: "hadr_C1_20_40",
+#     3: "hadr_C1_40_60",
+#     4: "hadr_C1_60_80",
+#     5: "hadr_C1_GT_80",
+#     6: "lept_C1_LT_15",
+#     7: "lept_C1_15_30",
+#     8: "lept_C1_30_45",
+#     9: "lept_C1_45_60",
+#     10: "lept_C1_60_75",
+#     11: "lept_C1_GT_75"
+# }
 categories = {
-    1: "hadr_C1_LT_20",
-    2: "hadr_C1_20_40",
-    3: "hadr_C1_40_60",
-    4: "hadr_C1_60_80",
-    5: "hadr_C1_GT_80",
-    6: "lept_C1_LT_15",
-    7: "lept_C1_15_30",
-    8: "lept_C1_30_45",
-    9: "lept_C1_45_60",
-    10: "lept_C1_60_75",
-    11: "lept_C1_GT_75"
+    1: "hadr_0",
+    2: "hadr_1",
+    3: "hadr_2",
+    4: "hadr_3",
+    5: "hadr_4",
+    6: "hadr_5",
+    7: "hadr_6",
+    8: "hadr_7",
+    9: "hadr_8",
+    10: "hadr_9",
+    11: "lept_0",
+    12: "lept_1",
+    13: "lept_2",
+    14: "lept_3",
+    15: "lept_4",
+    16: "lept_5",
+    17: "lept_6",
+    18: "lept_7",
+    19: "lept_8",
+    20: "lept_9",
+    21: "lept_10",
+    22: "lept_11",
+    23: "lept_12",
+    24: "lept_13"
 }
+
+
 total_yields = {era: {proc: {cat: 0.0 for cat in categories.values()} for proc in xs_procs} for era in eras_lumi.keys()}
 
 ### 1) ###
@@ -86,7 +133,11 @@ for era, lumi in eras_lumi.items():
             continue
         
         for i, cat in categories.items():
-            cat_dataset = ws.data(f"{proc}_{era}_hgg_125_13TeV_{cat}")
+            dataset_name = f"{proc}_{era}_hgg_125_13TeV_{cat}"
+            cat_dataset = ws.data(dataset_name)
+            if not cat_dataset:
+                print(f"No dataset {dataset_name} in {file_path}")
+                continue
             sum_w = cat_dataset.sumEntries()
             # finding the Number of Events for each era x proc x cat
             # print(f"Era {era} - proc {proc} - cat {cat}")

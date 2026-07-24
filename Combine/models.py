@@ -253,8 +253,13 @@ models = {
 
   "kVkF":"-P HiggsAnalysis.CombinedLimit.LHCHCGModels:K3 --PO BRU=0",
 
-  "k_lambda":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH \
+
+  "kl_C1reco":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH \
   --PO C1_gen_avg_cat_json=\"C1_gen_avg_cat_C1_reco.json\"",
+
+  "kl_pt":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH \
+  --PO C1_gen_avg_cat_json=\"C1_gen_avg_cat_pt.json\"",
+
 
   "muttH_klambda":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH \
   --PO C1_gen_avg_cat_json=\"C1_gen_avg_cat_C1_reco.json\""

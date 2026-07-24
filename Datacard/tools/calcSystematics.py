@@ -49,6 +49,9 @@ def getValueFromJson(row,uncertainties,sname):
   p = re.sub("_2022postEE_%s"%decayMode,"",p)
   p = re.sub("_preEE_%s"%decayMode,"",p)
   p = re.sub("_postEE_%s"%decayMode,"",p)
+  p = re.sub("_preBPix_%s"%decayMode,"",p)
+  p = re.sub("_postBPix_%s"%decayMode,"",p)
+  p = re.sub("_2024_%s"%decayMode,"",p)
   if p in uncertainties: 
     if type(uncertainties[p][sname])==list: return uncertainties[p][sname]
     else: return [uncertainties[p][sname]]
@@ -63,6 +66,9 @@ def factoryType(d,s):
 
   #Fix for pdfWeight (as Nweights > 10)
   if('weight_LHEPd' in s['name']): return "s_w"
+
+  #Fix for bTagSF hf/lf (wildcard also matches hfstats1/hfstats2/lfstats1/lfstats2)
+  if(s['name'] in ('weight_bTagSF_sys_hf','weight_bTagSF_sys_lf')): return "a_w"
 
   # Loop over rows in dataframe: until syst is found
   for ir, r in d[d['type']=='sig'].iterrows():
@@ -170,7 +176,7 @@ def calcSystYields(_nominalDataName,_nominalDataContents,_inputWS,_systFactoryTy
           if centralWeightStr in _nominalDataContents:
             f_central = p.getRealValue(centralWeightStr)
           else:
-            print("Be careful, the centralWeightStr %s cannot be found in the contents of the nominal tree"%centralWeightStr)
+            f_central = 1.
           # Changed and removed 01sigma to account for HiggsDNA conventions
           f_up, f_down = p.getRealValue("%sUp"%s), p.getRealValue("%sDown"%s)
           # Checks:

@@ -1,5 +1,35 @@
-{   
+{
     "WH":{
+        "QCDscale_WH":[1.005,0.993],
+        "pdf_Higgs_WH":1.017,
+        "alphaS_WH":1.009
+    },
+    "WPLUSH":{
+        "QCDscale_WH":[1.005,0.993],
+        "pdf_Higgs_WH":1.017,
+        "alphaS_WH":1.009
+    },
+    "WMINUSH":{
+        "QCDscale_WH":[1.005,0.993],
+        "pdf_Higgs_WH":1.017,
+        "alphaS_WH":1.009
+    },
+    "WPLUSH2HLNU":{
+        "QCDscale_WH":[1.005,0.993],
+        "pdf_Higgs_WH":1.017,
+        "alphaS_WH":1.009
+    },
+    "WMINUSH2HLNU":{
+        "QCDscale_WH":[1.005,0.993],
+        "pdf_Higgs_WH":1.017,
+        "alphaS_WH":1.009
+    },
+    "WPLUSH2HQQ":{
+        "QCDscale_WH":[1.005,0.993],
+        "pdf_Higgs_WH":1.017,
+        "alphaS_WH":1.009
+    },
+    "WMINUSH2HQQ":{
         "QCDscale_WH":[1.005,0.993],
         "pdf_Higgs_WH":1.017,
         "alphaS_WH":1.009

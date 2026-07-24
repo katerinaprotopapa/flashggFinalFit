@@ -26,6 +26,10 @@ theory_systematics = [
                 {'name':'alphaS_WH','title':'alphaS_WH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':'theory_uncertainties/thu_wh.json'},
                 {'name':'alphaS_ZH','title':'alphaS_ZH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':'theory_uncertainties/thu_zh.json'},
                 {'name':'alphaS_ttH','title':'alphaS_ttH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':'theory_uncertainties/thu_tth.json'},
+
+                {'name':'weight_AlphaS','title':'CMS_hgg_AlphaS','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']},
+                {'name':'weight_PS_ISR','title':'CMS_hgg_PS_ISR','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']},
+                {'name':'weight_PS_FSR','title':'CMS_hgg_PS_FSR','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']},
               ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,7 +37,23 @@ theory_systematics = [
 # EXPERIMENTAL SYSTEMATICS 
 
 experimental_systematics = [
-    
+                {'name':'weight_Pileup','title':'CMS_hgg_PileupWeight','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'weight_TriggerSF','title':'CMS_hgg_TriggerWeight','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'weight_PreselSF','title':'CMS_hgg_PreselSF','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'weight_ElectronVetoSF','title':'CMS_hgg_ElectronVetoSF','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'weight_ElectronIdLooseSF','title':'CMS_hgg_ElectronIdLooseSF','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'weight_ElectronIdRecoSF','title':'CMS_hgg_ElectronIdRecoSF','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'weight_NUM_TightPFIso_DEN_MediumID','title':'CMS_hgg_MuonIsoSF','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'weight_Tau_ID','title':'CMS_hgg_TauIDSF','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_cferr1','title':'CMS_hgg_bTagSF_cferr1','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_cferr2','title':'CMS_hgg_bTagSF_cferr2','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_hf','title':'CMS_hgg_bTagSF_hf','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_hfstats1','title':'CMS_hgg_bTagSF_hfstats1','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_hfstats2','title':'CMS_hgg_bTagSF_hfstats2','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_jes','title':'CMS_hgg_bTagSF_jes','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_lf','title':'CMS_hgg_bTagSF_lf','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_lfstats1','title':'CMS_hgg_bTagSF_lfstats1','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'weight_bTagSF_sys_lfstats2','title':'CMS_hgg_bTagSF_lfstats2','type':'factory','prior':'lnN','correlateAcrossYears':1},
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,5 +1,20 @@
-{   
-   "ZH":{
+{
+    "ZH":{
+        "QCDscale_ZH":[1.038,0.969],
+        "pdf_Higgs_ZH":1.013,
+        "alphaS_ZH":1.009
+    },
+    "ZH2HLL":{
+        "QCDscale_ZH":[1.038,0.969],
+        "pdf_Higgs_ZH":1.013,
+        "alphaS_ZH":1.009
+    },
+    "ZH2HNUNU":{
+        "QCDscale_ZH":[1.038,0.969],
+        "pdf_Higgs_ZH":1.013,
+        "alphaS_ZH":1.009
+    },
+    "ZH2HQQ":{
         "QCDscale_ZH":[1.038,0.969],
         "pdf_Higgs_ZH":1.013,
         "alphaS_ZH":1.009
