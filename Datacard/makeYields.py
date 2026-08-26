@@ -260,7 +260,7 @@ for ir,r in data[data['type']=='sig'].iterrows():
         else: y_COWCorr += w*(f_NNLOPS/f_COWCorr)
   except ReferenceError:
     print(f"\n Proc {r.proc} in Cat {r['cat']} has no entries,  skipping\n" )
- 
+
   data.at[ir,'nominal_yield'] = y
   # print(y)
   data.at[ir,'sumw2'] = sumw2

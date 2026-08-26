@@ -156,7 +156,6 @@ globalReplacementMap["Run3STXS0"]["catRVMap"]["VBF_VHQ_RECO"]= "VBF_VHQ_RECO"
 globalReplacementMap["Run3STXS0"]["catRVMap"]["WHleptonic_RECO"]= "WHleptonic_RECO"
 globalReplacementMap["Run3STXS0"]["catRVMap"]["ZHleptonic_RECO"]= "ZHleptonic_RECO"
 
-
 # Tutorial analysis
 globalReplacementMap['tutorial'] = od()
 # For WRONG VERTEX SCENARIO:

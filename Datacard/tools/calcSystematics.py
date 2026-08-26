@@ -65,9 +65,6 @@ def getValueFromJson(row,uncertainties,sname):
 # c) Anti-symmetric shifts in RooDataHist: "a_h"
 def factoryType(d,s):
 
-  # #Fix for bTagSF hf/lf (wildcard also matches hfstats1/hfstats2/lfstats1/lfstats2)
-  # if(s['name'] in ('weight_bTagSF_sys_hf','weight_bTagSF_sys_lf')): return "a_w"
-
   # Loop over rows in dataframe: until syst is found
   for ir, r in d[d['type']=='sig'].iterrows():
 

@@ -1,9 +1,9 @@
 {
     "mu_inclusive":{
         "pois":"r",
-        "fits":"profile1D:syst:r",
+        "fits":"profile1D:statonly:r",
         "points":"20:10",
-        "fit_opts":"--setParameterRanges r=-3,3 --saveSpecifiedNuis all --freezeParameters MH"
+        "fit_opts":"--setParameterRanges r=0,2 --saveSpecifiedNuis all --freezeParameters MH,lumiscale "
     },
 
     "mu_ggH_VBF":{
@@ -12,7 +12,7 @@
         "points":"20:10",
         "fit_opts":"--saveInactivePOI 1 --setParameterRanges r_ggH=0,3:r_VBF=0,5 --saveSpecifiedNuis all --freezeParameters MH"
     },
-
+    
     "mu_ttH":{
         "pois":"r_ttH",
         "fits":"profile1D:syst:r_ttH",
@@ -32,6 +32,25 @@
         "fits":"profile1D:syst:k_lambda",
         "points":"100:20",
         "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-20,50 --setParameters lumi_scale=8.65 --freezeParameters MH,lumi_scale --saveSpecifiedNuis all"
+    },
+
+    "mu_STXS0":{
+        "pois":"r_gghtruth,r_tthtruth,r_thtruth,r_whltruth,r_zhltruth,r_vbftruth",
+        "fits":"profile1D:statonly:r_gghtruth,r_tthtruth,r_thtruth,r_whltruth,r_zhltruth,r_vbftruth",
+        "points":"40:40",
+        "fit_opts":"--saveInactivePOI 1 --setParameters r_gghtruth=1,r_tthtruth=1,r_thtruth=1,r_whltruth=1,r_zhltruth=1,r_vbftruth=1 --setParameterRanges r_gghtruth=0,3:r_tthtruth=0,3:r_thtruth=-4.5,7:r_whltruth=0,3:r_zhltruth=-8,8:r_vbftruth=0,3 --saveSpecifiedNuis all --freezeParameters MH,lumiscale"
+    },
+    "mu_gghtruth":{
+        "pois":"r_gghtruth",
+        "fits":"profile1D:syst:r_gghtruth",
+        "points":"400:40",
+        "fit_opts":"--saveInactivePOI 1 --setParameters r_gghtruth --setParameterRanges r_gghtruth=0,3 --saveSpecifiedNuis all --freezeParameters MH"
+    },
+    "mu_vbfvhqtruth":{
+        "pois":"r_vbfvhqtruth",
+        "fits":"profile1D:syst:r_vbfvhqtruth",
+        "points":"500:1",
+        "fit_opts":"--saveInactivePOI 1 --setParameters r_vbfvhqtruth --setParameterRanges r_vbfvhqtruth=0,3 --saveSpecifiedNuis all --freezeParameters MH"
     }
 
 }

@@ -6,7 +6,7 @@ import math
 from collections import OrderedDict as od
 from commonObjects import *
 
-# # Function for iterating over ROOT argsets in workspace
+# Function for iterating over ROOT argsets in workspace
 # def rooiter(x):
 #   iter = x.iterator()
 #   ret = iter.Next()
@@ -28,6 +28,7 @@ def extractParquetFileNames( _inputParquetDir ):
 
 def extractListOfProcs( _listOfWSFileNames, mode="root" ):
   procs = []
+  
   for fName in _listOfWSFileNames:
     p = fName.split("__")[-1].split(f".{mode}")[0]
     if (p not in procs): 
@@ -36,10 +37,19 @@ def extractListOfProcs( _listOfWSFileNames, mode="root" ):
   return ",".join(procs)
 
 def extractListOfCats( _listOfWSFileNames ):
-  f0 = ROOT.TFile(_listOfWSFileNames[0]) 
+  print(_listOfWSFileNames)
+  f0 = ROOT.TFile(_listOfWSFileNames[4]) #Note: This was [0], but not good, if the first file has only 5 instead of 6 RECOS clearly it will miss some RECOs
+  print("A")
+  print(_listOfWSFileNames[1])
+  print(f0.ls())
   ws = f0.Get(inputWSName__)
+  print("B")
+  print(ws)
+  print(inputWSName__)
   allData = ws.allData()
   cats = []
+  print(allData)
+  print(len(allData))
   for d in allData:
     # Skip systematics shifts
     if "sigma" in d.GetName(): continue
@@ -102,6 +112,7 @@ def massFromFileName(_fileName):
 # Function for converting STXS process to production mode in dataset name
 procToDataMap = od()
 # procToDataMap['GG2H'] = 'ggh'
+# procToDataMap['GG2HQQ'] = 'ggzh'
 procToDataMap['VBF'] = 'VBF'
 procToDataMap['WH2HQQ'] = 'wh'
 # procToDataMap['ZH2HQQ'] = 'zh'

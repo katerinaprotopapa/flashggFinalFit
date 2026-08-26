@@ -45,7 +45,7 @@ def get_options():
   parser.add_option('--skipVertexScenarioSplit', dest='skipVertexScenarioSplit', default=True, action="store_true", help="Skip vertex scenario split")
   parser.add_option('--skipZeroes', dest='skipZeroes', default=False, action="store_true", help="Skip proc x cat is numEntries = 0., or sumEntries < 0.")
   # For systematics
-  parser.add_option('--skipSystematics', dest='skipSystematics', default=False, action="store_true", help="Skip shape systematics in signal model")
+  parser.add_option('--skipSystematics', dest='skipSystematics', default=True, action="store_true", help="Skip shape systematics in signal model")
   parser.add_option('--useDiagonalProcForSyst', dest='useDiagonalProcForSyst', default=False, action="store_true", help="Use diagonal process for systematics (requires diagonal mapping produced by getDiagProc script)")
   parser.add_option("--scales", dest='scales', default='', help="Photon shape systematics: scales")
   parser.add_option("--scalesCorr", dest='scalesCorr', default='', help='Photon shape systematics: scalesCorr')
@@ -174,7 +174,6 @@ nominalDatasets = od()
 # For RV (or if skipping vertex scenario split)
 datasetRVForFit = od()
 for mp in opt.massPoints.split(","):
-
   # Katerina: this is what I had previously
   # print("procRVFit: ", procRVFit)
   # WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procRVFit))[0]
@@ -279,6 +278,10 @@ if not opt.skipVertexScenarioSplit:
       f.Close()
     # Check if replacement dataset has too few entries: if so throw error
     if( datasetWVForFit[MHNominal].numEntries() < opt.replacementThreshold )or( datasetWVForFit[MHNominal].sumEntries() < 0. ):
+      print(datasetWVForFit[MHNominal].numEntries())
+      print(datasetWVForFit[MHNominal])
+      print(MHNominal)
+      print(datasetWVForFit)
       print(" --> [ERROR] replacement dataset (%s,%s) has too few entries (%g < %g) with sumEntries: %g"%(procReplacementFit,catReplacementFit,datasetWVForFit[MHNominal].numEntries(),opt.replacementThreshold, datasetWVForFit[MHNominal].sumEntries()))
       # sys.exit(1)
     else:

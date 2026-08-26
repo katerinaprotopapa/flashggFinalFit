@@ -102,7 +102,8 @@ for cat,f in inputFiles.items():
   # Iterate over norms: extract total category norm
   catNorm = 0
   for k, norm in norms.items():
-    proc, year = k.split("__")
+    year = k.split("__")[-1]
+    proc = "_".join(k.split("_")[:3])
     w.var("IntLumi").setVal(lumiScaleFactor*lumiMap[year])
     catNorm += norm.getVal()
 

@@ -1,6 +1,6 @@
 # Final Fits (higgsdnafinalfit)
 
-This is the branch for using final fits with the output of HiggsDNA.
+This is the development branch for the Run 3 STXS analysis.
 
 Welcome to the new Final Fits package. Here lies a a series of scripts which are used to run the final stages of CMS Hgg analyses: signal modelling, background modelling, datacard creation, final statistical interpretation and final result plots.
 

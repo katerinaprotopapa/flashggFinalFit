@@ -3,10 +3,10 @@
 backgroundScriptCfg = {
   
   # Setup
-  'inputWS':'PATH_TO_INPUTS/workspaces/data/allData_2022preEE.root', # location of 'allData.root' file
+  'inputWS':"/eos/user/p/pkrueper/STXS3_2025/src/run3hggstxs/classification/multiclassifier_extended_eval17marchon30may_176_finalfits/data/root/Data/ws/allData_data.root", # location of 'allData.root' file
   'cats':'auto', # auto: automatically inferred from input ws
   'catOffset':0, # add offset to category numbers (useful for categories from different allData.root files)  
-  'ext':'tutorial', # extension to add to output directory
+  'ext':'STXS0', # extension to add to output directory
   'year':'combined', # Use combined when merging all years in category (for plots)
 
   # Job submission options

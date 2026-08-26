@@ -28,6 +28,14 @@ XSBRMap['tutorial']['decay'] = {'mode':'hgg'}
 XSBRMap['tutorial']['GG2H'] = {'mode':'constant', 'factor':51.96}
 XSBRMap['tutorial']['VBF'] = {'mode':'constant', 'factor':4.067}
 
+XSBRMap['Run3STXS'] = od()
+XSBRMap['Run3STXS']['decay'] = {'mode':'hgg'}
+XSBRMap['Run3STXS']['gghtruth'] = {'mode':'constant', 'factor':52.23}
+XSBRMap['Run3STXS']['tthtruth'] = {'mode':'constant', 'factor':0.5700}
+XSBRMap['Run3STXS']['thtruth'] = {'mode':'constant', 'factor':0.104}
+XSBRMap['Run3STXS']['whltruth'] = {'mode':'constant', 'factor':1.4564}
+XSBRMap['Run3STXS']['zhltruth'] = {'mode':'constant', 'factor':0.94388}
+XSBRMap['Run3STXS']['vbfVhqtruth'] = {'mode':'constant', 'factor':4.078}
 # STXS analysis
 XSBRMap['STXS'] = od()
 XSBRMap['STXS']['decay'] = {'mode':'hgg'}
@@ -340,6 +348,7 @@ XSBRMap['HIG-25-020']['THW_FID'] = {'mode':'constant', 'factor':0.991943092*XS['
 XSBRMap['HIG-25-020']['BBH_FWDH'] = {'mode':'constant', 'factor':0.055177792*XS['BBH']}
 XSBRMap['HIG-25-020']['BBH_FID'] = {'mode':'constant', 'factor':0.944822208*XS['BBH']}
 
+
 # kl analysis - C1reco
 # XS values for mH=125.09GeV: https://gitlab.cern.ch/jlangfor/stxs-run3-recommendations/-/blob/master/data/SM_Higgs_XS_13p6TeV.xlsx?ref_type=heads
 XSBRMap['kl_C1reco'] = od()
@@ -367,6 +376,7 @@ XSBRMap['kl_pt']['VBF'] = {'mode':'constant', 'factor':4.067}
 XSBRMap['kl_pt']['WH'] = {'mode':'constant', 'factor':1.442}
 XSBRMap['kl_pt']['ZH'] = {'mode':'constant', 'factor':0.944} # adding ggZH in - without ggZH: 0.936
 XSBRMap['kl_pt']['ttH'] = {'mode':'constant', 'factor':0.564}
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Functions for loading XS*BR below
