@@ -1,0 +1,15 @@
+{
+    "pdfindex_hadr_C1_10_21_13TeV": 1,
+    "pdfindex_hadr_C1_21_30_13TeV": 1,
+    "pdfindex_hadr_C1_30_36_13TeV": 2,
+    "pdfindex_hadr_C1_36_42_13TeV": 0,
+    "pdfindex_hadr_C1_42_63_13TeV": 3,
+    "pdfindex_hadr_C1_GT_63_13TeV": 2,
+    "pdfindex_hadr_C1_LT_10_13TeV": 0,
+    "pdfindex_lept_C1_15_30_13TeV": 0,
+    "pdfindex_lept_C1_30_43_13TeV": 0,
+    "pdfindex_lept_C1_43_63_13TeV": 1,
+    "pdfindex_lept_C1_63_70_13TeV": 2,
+    "pdfindex_lept_C1_GT_70_13TeV": 1,
+    "pdfindex_lept_C1_LT_15_13TeV": 2
+}

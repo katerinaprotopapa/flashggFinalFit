@@ -52,7 +52,7 @@ if opt.inputConfig != '':
     options['smears']       = _cfg['smears']
     options['batch']        = _cfg['batch']
     options['queue']        = _cfg['queue']
-    options['max_runtime']  = _cfg['max_runtime']
+    # options['max_runtime']  = _cfg['max_runtime']
     # Options from command line
     options['mode']                    = opt.mode
     options['modeOpts']                = opt.modeOpts
@@ -120,7 +120,7 @@ if options['batch'] in ['condor','IC','SGE']:
   print(" --> Job information:")
   print("     * Batch: %s"%options['batch'])
   print("     * Queue: %s"%options['queue'])
-  print("     * MaxRuntime: %s"%options['max_runtime'])
+  # print("     * MaxRuntime: %s"%options['max_runtime'])
   print("")
 elif options['batch'] == "local":
   print(" --> Job information:")

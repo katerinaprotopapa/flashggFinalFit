@@ -14,6 +14,7 @@ parser = argparse.ArgumentParser()
 #parser.add_argument("-i", "--input-file", required=True, type=str, help='Path to input file')
 parser.add_argument("-i", "--input-dir", required=True, type=str, help='Path to input directory')
 parser.add_argument("-c", "--config", required=True, type=str, help='Config file')
+parser.add_argument("--category", required=False, default='pred_C1_reco', type=str, help='Config file') # for STXS this is 'category
 args = parser.parse_args()
 
 # Load config
@@ -32,11 +33,21 @@ for i, input_file in enumerate(list_of_files):
     f = pq.ParquetFile(input_file).read()
     df = f.to_pandas()
 
+    # renaming categories 
+    if 'categories' in config:
+        df[args.category] = df[args.category].map(str).map(config['categories'])
+    # renaming 'mass' column to 'CMS_hgg_mass'
+    if 'mass' in df.columns:
+        df = df.rename(columns={'mass': 'CMS_hgg_mass'})
+
     # Extract process for file name
     proc = input_file.split("__")[-1].strip(".parquet")
+    # skip specific procs e.g MC background
+    if proc in config.get('procs_to_drop', []):
+        continue
 
     # Extract categories
-    cats = list(df['category'].unique())
+    cats = list(df[args.category].unique())
     if 'cats_to_drop' in config:
         cats = [cat for cat in cats if cat not in config['cats_to_drop']]
 
@@ -55,7 +66,7 @@ for i, input_file in enumerate(list_of_files):
     for cat in cats:
 
         # Mask events in cat
-        mask = (df['category'] == cat)
+        mask = (df[args.category] == cat)
 
         # Make RooArgSet
         aset = make_argset(ws, config['main_vars'])

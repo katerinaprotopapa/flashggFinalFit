@@ -1,0 +1,24 @@
+{
+    "main_vars" : [
+        "CMS_hgg_mass", "weight", "dZ", "C1_gen",
+        "weight_AlphaSDown", "weight_AlphaSUp", "weight_ElectronIdLooseSFDown", "weight_ElectronIdLooseSFUp", "weight_ElectronIdRecoSFDown", "weight_ElectronIdRecoSFUp", "weight_ElectronVetoSFDown", "weight_ElectronVetoSFUp", "weight_NUM_TightPFIso_DEN_MediumIDDown", "weight_NUM_TightPFIso_DEN_MediumIDUp", "weight_PS_FSRDown", "weight_PS_FSRUp", "weight_PS_ISRDown", "weight_PS_ISRUp", "weight_PileupDown", "weight_PileupUp", "weight_PreselSFDown", "weight_PreselSFUp", "weight_Tau_IDDown", "weight_Tau_IDUp", "weight_TriggerSFDown", "weight_TriggerSFUp"
+    ],
+    "categories": {
+        "0": "background",
+        "1": "hadr_C1_LT_10",
+        "2": "hadr_C1_10_21",
+        "3": "hadr_C1_21_30",
+        "4": "hadr_C1_30_36",
+        "5": "hadr_C1_36_42",
+        "6": "hadr_C1_42_63",
+        "7": "hadr_C1_GT_63",
+        "8": "lept_C1_LT_15",
+        "9": "lept_C1_15_30",
+        "10": "lept_C1_30_43",
+        "11": "lept_C1_43_63",
+        "12": "lept_C1_63_70",
+        "13": "lept_C1_GT_70"
+    },
+    "cats_to_drop" : ["background"],
+    "procs_to_drop": ["background"]
+}

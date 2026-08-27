@@ -16,6 +16,7 @@ parser.add_argument("-i", "--input-dir", required=True, type=str, help='Path to 
 parser.add_argument("-e", "--era", required=True, type=str, help='Era to process. If merge, merge across eras')
 parser.add_argument("-c", "--config", required=True, type=str, help='Config file')
 parser.add_argument("--save-merged-parquet", default=False, action="store_true", help='Save merged parquet file')
+parser.add_argument("--category", required=False, default='pred_C1_reco', type=str, help='Config file') # for STXS this is 'category
 args = parser.parse_args()
 
 # Load config
@@ -35,6 +36,14 @@ for i, input_file in enumerate(list_of_files):
     # Load parquet file
     f = pq.ParquetFile(input_file).read()
     df = f.to_pandas()
+
+    # renaming categories 
+    if 'categories' in config:
+        df[args.category] = df[args.category].map(str).map(config['categories'])
+    # renaming 'mass' column to 'CMS_hgg_mass'
+    if 'mass' in df.columns:
+        df = df.rename(columns={'mass': 'CMS_hgg_mass'})
+
     df_list.append(df)
 
 # Concatenate dataframes
@@ -42,10 +51,10 @@ merged_df = pd.concat(df_list, ignore_index=True)
 
 # Print number of events in category
 print(" --> Number of data events in categories...")
-print(merged_df['category'].value_counts())
+print(merged_df[args.category].value_counts())
 
 # Extract categories
-cats = list(merged_df['category'].unique())
+cats = list(merged_df[args.category].unique())
 if 'cats_to_drop' in config:
     cats = [cat for cat in cats if cat not in config['cats_to_drop']]
 
@@ -65,7 +74,7 @@ f_out_dir.cd()
 ws = ROOT.RooWorkspace(inputWSName__.split("/")[1],inputWSName__.split("/")[1])
 
 # Add variables to workspace
-vars_to_add = [var for var in config['main_vars'] if var not in ['dZ', 'weight']]
+vars_to_add = [var for var in config['main_vars'] if var not in ['dZ', 'weight'] and not var.startswith('weight_')] # data does not have systematics
 
 list_of_vars = add_vars_to_workspace(ws, config['main_vars'])
 
@@ -73,7 +82,7 @@ list_of_vars = add_vars_to_workspace(ws, config['main_vars'])
 for cat in cats:
 
     # Mask events in cat
-    mask = (merged_df['category'] == cat)
+    mask = (merged_df[args.category] == cat)
 
     # Make RooArgSet
     aset = make_argset(ws, vars_to_add)

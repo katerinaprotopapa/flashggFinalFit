@@ -4,13 +4,14 @@ import numpy as np
 
 # Definitions
 num_points = 100
-categories_json = "/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/flashggFinalFit/Trees2WS/config_categories_kl.json"
+categories_json = "/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/flashggFinalFit/Trees2WS/config_categories_C1reco.json"
 
 ROOT.gROOT.SetBatch(True)
 ROOT.gStyle.SetOptTitle(0) # hiding the default box title for a cleaner look
 
 # Workspace
-f = ROOT.TFile.Open("Datacard_kl_k_lambda.root")
+# f = ROOT.TFile.Open("Datacard_C1reco_k_lambda.root")
+f = ROOT.TFile.Open("Datacard_C1reco_kl_C1reco.root")
 w = f.Get("w")
 
 # k_lambda - my POI
@@ -32,7 +33,8 @@ colors = [
     ROOT.kPink+1,    # Dark Pink
     ROOT.kYellow+2,  # Mustard/Gold
     ROOT.kGray+3,    # Deep Charcoal
-    ROOT.kOrange-3   # Vibrant Sunset 
+    ROOT.kOrange-3,  # Vibrant Sunset 
+    ROOT.kRed+3      # Deep Burgundy
 ]
 # scans
 def get_scan(func_prefix, cats):
@@ -101,7 +103,7 @@ ROOT.gPad.SetBottomMargin(0.15) # Bottom margin
 ROOT.gPad.SetTopMargin(0.05)    # Top margin
 mg_xs = ROOT.TMultiGraph()
 leg_xs = ROOT.TLegend(0.7, 0.69, 0.95, 1.0)
-leg_xs.SetTextSize(0.03)
+leg_xs.SetTextSize(0.027)
 leg_xs.SetFillColor(ROOT.kWhite)
 leg_xs.SetFillStyle(1001) # 1001 is the code for "solid fill"
 leg_xs.SetBorderSize(1)
@@ -111,9 +113,9 @@ for cat, g in xs_graphs.items():
     leg_xs.AddEntry(g, cat, "L")
 
 mg_xs.Draw("A")
-mg_xs.SetMinimum(-0.6)
-mg_xs.SetMaximum(1.6)
-style_axis(mg_xs, "#kappa_{#lambda}", "#mu_{#sigma}")
+mg_xs.SetMinimum(-0.7)
+mg_xs.SetMaximum(1.7)
+style_axis(mg_xs, "#kappa_{#lambda}", "#mu_{ttH}")
 line_h.Draw()
 line_v.DrawLine(1, ROOT.gPad.GetUymin(), 1, ROOT.gPad.GetUymax())
 leg_xs.Draw()
@@ -129,7 +131,7 @@ ROOT.gPad.SetTopMargin(0.05)    # Top margin
 br_g = br_graphs["hgg"]
 br_g.SetLineColor(ROOT.kBlack)
 br_g.Draw("AL")
-style_axis(br_g, "#kappa_{#lambda}", "#mu_{BR}")
+style_axis(br_g, "#kappa_{#lambda}", "#mu_{H#gamma#gamma}")
 
 ROOT.gPad.Update()
 leg_br = ROOT.TLegend(0.2, 0.8, 0.4, 0.9)
@@ -150,7 +152,7 @@ ROOT.gPad.SetBottomMargin(0.15) # Bottom margin
 ROOT.gPad.SetTopMargin(0.05)    # Top margin
 mg_xsbr = ROOT.TMultiGraph()
 leg_xsbr = ROOT.TLegend(0.7, 0.69, 0.95, 1.0)
-leg_xsbr.SetTextSize(0.03)
+leg_xsbr.SetTextSize(0.027)
 leg_xsbr.SetFillColor(ROOT.kWhite)
 leg_xsbr.SetFillStyle(1001) # 1001 is the code for "solid fill"
 leg_xsbr.SetBorderSize(1)
@@ -162,9 +164,9 @@ for cat_hgg in categories:
     leg_xsbr.AddEntry(g, cat_hgg.replace("_hgg",""), "L")
 
 mg_xsbr.Draw("A")
-mg_xsbr.SetMinimum(-0.6)
-mg_xsbr.SetMaximum(1.6)
-style_axis(mg_xsbr, "#kappa_{#lambda}", "#mu_{#sigma #times BR}")
+mg_xsbr.SetMinimum(-0.7)
+mg_xsbr.SetMaximum(1.7)
+style_axis(mg_xsbr, "#kappa_{#lambda}", "#mu_{ttH#gamma#gamma}")
 line_h.Draw()
 line_v.DrawLine(1, ROOT.gPad.GetUymin(), 1, ROOT.gPad.GetUymax())
 leg_xsbr.Draw()

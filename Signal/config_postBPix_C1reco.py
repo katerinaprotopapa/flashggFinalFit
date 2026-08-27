@@ -5,7 +5,7 @@ _year = 'postBPix'
 signalScriptCfg = {
   
   # Setup
-  'inputWSDir':'/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/flashggFinalFit/RooWorkspaces/C1_reco/signal/%s'%_year,
+  'inputWSDir':'/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/final_fits/MC/nominal/%s'%_year,
   'procs':'auto', # if auto: inferred automatically from filenames
   'cats':'auto', # if auto: inferred automatically from (0) workspace
   'ext':'kl_C1reco_%s'%_year,
@@ -22,6 +22,6 @@ signalScriptCfg = {
   # Job submission options
   'batch':'condor', # ['condor','SGE','IC','local']
   'queue':'espresso',
-  'max_runtime': 3600,
+  # 'max_runtime': 3600,
 
 }
