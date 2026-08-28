@@ -37,6 +37,10 @@ theory_systematics = [
 # EXPERIMENTAL SYSTEMATICS 
 
 experimental_systematics = [
+                {'name':'lumi_1','title':'lumi_1','type':'constant','prior':'lnN','correlateAcrossYears':-1,'value':{'preEE':'1.0138', 'postEE':'1.0138', 'preBPix':'1.0017', 'postBPix':'1.0017', '2024':'1.0020'}},
+                {'name':'lumi_2','title':'lumi_2','type':'constant','prior':'lnN','correlateAcrossYears':-1,'value':{'preEE':'-', 'postEE':'-', 'preBPix':'1.0127', 'postBPix':'1.0127', '2024':'1.0068'}},
+                {'name':'lumi_3','title':'lumi_3','type':'constant','prior':'lnN','correlateAcrossYears':-1,'value':{'preEE':'-', 'postEE':'-', 'preBPix':'-', 'postBPix':'-', '2024':'1.0144'}},
+
                 {'name':'weight_Pileup','title':'CMS_hgg_PileupWeight','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 {'name':'weight_TriggerSF','title':'CMS_hgg_TriggerWeight','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 {'name':'weight_PreselSF','title':'CMS_hgg_PreselSF','type':'factory','prior':'lnN','correlateAcrossYears':1},
@@ -54,6 +58,18 @@ experimental_systematics = [
                 # {'name':'weight_bTagSF_sys_lf','title':'CMS_hgg_bTagSF_lf','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 # {'name':'weight_bTagSF_sys_lfstats1','title':'CMS_hgg_bTagSF_lfstats1','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 # {'name':'weight_bTagSF_sys_lfstats2','title':'CMS_hgg_bTagSF_lfstats2','type':'factory','prior':'lnN','correlateAcrossYears':1},
+
+                {'name':'MET_unclusteredEnergy','title':'CMS_hgg_MET_Unclustered','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'Tau_EnergyScale','title':'CMS_scale_t','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'energyErrShift','title':'CMS_hgg_SigmaEOverEShift','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'jec_syst_FlavorQCD','title':'CMS_scale_j_FlavorQCD','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'jec_syst_RelativeBal','title':'CMS_scale_j_RelativeBal','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'jec_syst_Total','title':'CMS_scale_j','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                # {'name':'jer_syst','title':'CMS_res_j','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'Electron_Scale2G_IJazZ','title':'CMS_hgg_Electron_Scale2G_IJazZ','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'PhotonIDMVAShape','title':'CMS_hgg_phoIdMva','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'MuonResolution','title':'CMS_res_m','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'MuonScale','title':'CMS_scale_m','type':'factory','prior':'lnN','correlateAcrossYears':1},
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,5 +77,9 @@ experimental_systematics = [
 # SIGNAL SHAPE SYSTEMATICS
 
 signal_shape_systematics = [
-    
+                {'name':'Material','title':'Material','type':'signal_shape','mode':'scalesCorr','mean':'0.0','sigma':'1.0','correlateAcrossYears':1},
+                {'name':'FNUF','title':'FNUF','type':'signal_shape','mode':'scalesCorr','mean':'0.0','sigma':'1.0','correlateAcrossYears':1},
+                {'name':'ScaleEB2G_IJazZ','title':'ScaleEB2G_IJazZ','type':'signal_shape','mode':'scales','mean':'0.0','sigma':'1.0','correlateAcrossYears':0},
+                {'name':'ScaleEE2G_IJazZ','title':'ScaleEE2G_IJazZ','type':'signal_shape','mode':'scales','mean':'0.0','sigma':'1.0','correlateAcrossYears':0},
+                {'name':'Smearing2G_IJazZ','title':'Smearing2G_IJazZ','type':'signal_shape','mode':'smears','mean':'0.0','sigma':'1.0','correlateAcrossYears':0}, 
 ]

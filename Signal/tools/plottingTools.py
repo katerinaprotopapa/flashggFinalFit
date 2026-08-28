@@ -460,14 +460,17 @@ def plotSignalModel(_hists,_opt,_outdir=".",offset=0.02):
     leg0.AddEntry(_hists['pdf'],"#splitline{Parametric}{model}","l")
     leg0.Draw("Same")
 
-    leg1 = ROOT.TLegend(0.17+offset,0.45,0.4+offset,0.61)
+    nYears = len(_opt.years.split(","))
+    leg1_top = 0.61
+    leg1_bottom = leg1_top - 0.045*nYears
+    leg1 = ROOT.TLegend(0.17+offset,leg1_bottom,0.4+offset,leg1_top)
     leg1.SetFillStyle(0)
     leg1.SetLineColor(0)
-    leg1.SetTextSize(0.02)
+    leg1.SetTextSize(0.03)
     for year in _opt.years.split(","): leg1.AddEntry(_hists['pdf_%s'%year],"%s: #scale[0.8]{#sigma_{eff} = %1.2f GeV}"%(year,getEffSigma(_hists['pdf_%s'%year])),"l")
     leg1.Draw("Same")
 
-    leg2 = ROOT.TLegend(0.15+offset,0.3,0.5+offset,0.45)
+    leg2 = ROOT.TLegend(0.15+offset,leg1_bottom-0.15,0.5+offset,leg1_bottom)
     leg2.SetFillStyle(0)
     leg2.SetLineColor(0)
     leg2.SetTextSize(0.03)

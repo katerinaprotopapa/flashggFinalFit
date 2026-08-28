@@ -37,28 +37,23 @@ def extractListOfProcs( _listOfWSFileNames, mode="root" ):
   return ",".join(procs)
 
 def extractListOfCats( _listOfWSFileNames ):
-  print(_listOfWSFileNames)
-  f0 = ROOT.TFile(_listOfWSFileNames[4]) #Note: This was [0], but not good, if the first file has only 5 instead of 6 RECOS clearly it will miss some RECOs
-  print("A")
-  print(_listOfWSFileNames[1])
-  print(f0.ls())
-  ws = f0.Get(inputWSName__)
-  print("B")
-  print(ws)
-  print(inputWSName__)
-  allData = ws.allData()
+  # Union categories across all files: any single file may be missing categories
+  # where that process has zero MC events (no RooDataSet created for that combo).
   cats = []
-  print(allData)
-  print(len(allData))
-  for d in allData:
-    # Skip systematics shifts
-    if "sigma" in d.GetName(): continue
-    # Skip NOTAG
-    elif "NOTAG" in d.GetName(): continue
-    # Add to list: name of the form {proc}_{mass}_{sqrts}_{cat}
-    cats.append(d.GetName().split("_%s_"%sqrts__)[-1])
-  ws.Delete()
-  f0.Close()
+  for fn in _listOfWSFileNames:
+    f0 = ROOT.TFile(fn)
+    ws = f0.Get(inputWSName__)
+    allData = ws.allData()
+    for d in allData:
+      # Skip systematics shifts
+      if "sigma" in d.GetName(): continue
+      # Skip NOTAG
+      elif "NOTAG" in d.GetName(): continue
+      # Add to list: name of the form {proc}_{mass}_{sqrts}_{cat}
+      cat = d.GetName().split("_%s_"%sqrts__)[-1].lstrip("_")
+      if cat not in cats: cats.append(cat)
+    ws.Delete()
+    f0.Close()
   return ",".join(cats)
 
 def extractListOfCatsFromData( _fileName ):
@@ -67,7 +62,7 @@ def extractListOfCatsFromData( _fileName ):
   allData = ws.allData()
   cats = []
   for d in allData:
-    c = d.GetName().split("Data_%s_"%sqrts__)[-1]
+    c = d.GetName().split("__%s__"%sqrts__)[-1]
     cats.append(c)
   cats.sort()
   ws.Delete()

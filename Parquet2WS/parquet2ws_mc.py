@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 #parser.add_argument("-i", "--input-file", required=True, type=str, help='Path to input file')
 parser.add_argument("-i", "--input-dir", required=True, type=str, help='Path to input directory')
 parser.add_argument("-c", "--config", required=True, type=str, help='Config file')
-parser.add_argument("--category", required=False, default='pred_C1_reco', type=str, help='Config file') # for STXS this is 'category
+parser.add_argument("--category", required=False, default='pred_C1_reco', type=str, help='Config file') # for STXS this is 'category'
 args = parser.parse_args()
 
 # Load config

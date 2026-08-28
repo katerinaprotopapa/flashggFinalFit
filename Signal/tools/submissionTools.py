@@ -15,15 +15,32 @@ def writePreamble(_file):
   _file.write("export SCRAM_ARCH=%s\n"%os.environ['SCRAM_ARCH'])
   _file.write("source /cvmfs/cms.cern.ch/cmsset_default.sh\n")
   _file.write("eval `scramv1 runtime -sh`\n")
+  _file.write("export PYTHONNOUSERSITE=1\n")
   _file.write("cd %s\n"%swd__)
   _file.write("export PYTHONPATH=$PYTHONPATH:%s/tools:%s/tools\n\n"%(cwd__,swd__))
 
-def writeCondorSub(_file,_exec,_queue,_nJobs,_jobOpts,max_runtime=None,doHoldOnFailure=True,doPeriodicRetry=True):
+# Standalone preamble (flashggFinalFit conda env only, no CMSSW/scram): needed for scripts like
+# calcPhotonSyst_parquet.py that import pandas/pyarrow/matplotlib/mplhep - CMSSW's ROOT and the
+# conda env's own ROOT can't both be loaded in the same process without clashing.
+def writePreambleStandalone(_file):
+  _file.write("#!/bin/bash\n")
+  _file.write("ulimit -s unlimited\n")
+  _file.write("set -e\n")
+  _file.write("export MAMBA_EXE='/home/hep/evp18/.local/bin/micromamba'\n")
+  _file.write("export MAMBA_ROOT_PREFIX='/home/hep/evp18/micromamba'\n")
+  _file.write("eval \"$($MAMBA_EXE shell hook --shell bash --root-prefix $MAMBA_ROOT_PREFIX)\"\n")
+  _file.write("micromamba activate flashggFinalFit\n")
+  _file.write("export CMSSW_BASE=%s\n"%os.environ['CMSSW_BASE'])
+  _file.write("export SCRAM_ARCH=None\n")
+  _file.write("cd %s\n"%swd__)
+  _file.write("export PYTHONPATH=$PYTHONPATH:%s/tools:%s/tools\n\n"%(cwd__,swd__))
+
+def writeCondorSub(_file,_exec,_queue,_nJobs,_jobOpts,max_runtime,doHoldOnFailure=True,doPeriodicRetry=True):
   _file.write("executable = %s.sh\n"%_exec)
   _file.write("arguments  = $(ProcId)\n")
   _file.write("output     = %s.$(ClusterId).$(ProcId).out\n"%_exec)
   _file.write("error      = %s.$(ClusterId).$(ProcId).err\n"%_exec)
-  _file.write("getenv     = True\n\n")
+  _file.write("+MaxRuntime = %s\n"%max_runtime)
   if _jobOpts != '':
     _file.write("# User specified job options\n")
     for jo in _jobOpts.split(":"): _file.write("%s\n"%jo)
@@ -55,7 +72,11 @@ def writeSubFiles(_opts):
   if _opts['batch'] == "condor":
     _executable = "condor_%s_%s"%(_opts['mode'],_opts['ext'])
     _f = open("%s/%s.sh"%(_jobdir,_executable),"w") # single .sh script split into separate jobs
-    writePreamble(_f)
+    # calcPhotonSyst_parquet.py needs pandas/pyarrow/matplotlib/mplhep, not bundled in CMSSW:
+    # use the flashggFinalFit conda env instead (self-consistent, avoids ~/.local ABI mismatches
+    # and CMSSW/conda ROOT clashing if both are loaded in the same process)
+    if _opts['mode'] == "calcPhotonSyst": writePreambleStandalone(_f)
+    else: writePreamble(_f)
 
     # Write details depending on mode
 
@@ -83,7 +104,7 @@ def writeSubFiles(_opts):
       for cidx in range(_opts['nCats']):
         c = _opts['cats'].split(",")[cidx]
         _f.write("if [ $1 -eq %g ]; then\n"%cidx)
-        _f.write("  python3 %s/scripts/calcPhotonSyst_parquet.py --cat %s --procs %s --ext %s --inputDir %s --scales \'%s\' --scalesCorr \'%s\' --scalesGlobal \'%s\' --smears \'%s\' %s\n"%(swd__,c,_opts['procs'],_opts['ext'],_opts['inputWSDir'],_opts['scales'],_opts['scalesCorr'],_opts['scalesGlobal'],_opts['smears'],_opts['modeOpts']))
+        _f.write("  python3 %s/scripts/calcPhotonSyst_parquet.py --cat %s --procs %s --ext %s --inputDir %s --scales \'%s\' --scalesCorr \'%s\' --scalesGlobal \'%s\' --smears \'%s\' --categories \'%s\' %s\n"%(swd__,c,_opts['procs'],_opts['ext'],_opts['inputWSDir'],_opts['scales'],_opts['scalesCorr'],_opts['scalesGlobal'],_opts['smears'],_opts['categories'],_opts['modeOpts']))
         _f.write("fi\n")
 
     elif _opts['mode'] == "fTest":
@@ -112,9 +133,9 @@ def writeSubFiles(_opts):
     # Condor submission file
     _fsub = open("%s/%s.sub"%(_jobdir,_executable),"w")
     if _opts['mode'] == "signalFit": 
-      if( not _opts['groupSignalFitJobsByCat'] ): writeCondorSub(_fsub,_executable,_opts['queue'],_opts['nCats']*_opts['nProcs'],_opts['jobOpts'],dir="signalFit") # max_runtime=_opts['max_runtime']
-      else: writeCondorSub(_fsub,_executable,_opts['queue'],_opts['nCats'],_opts['jobOpts'],dir="signalFit") # max_runtime=_opts['max_runtime']
-    elif( _opts['mode'] == "calcPhotonSyst" )|( _opts['mode'] == "fTest" )|( _opts['mode'] == "packageSignal" ): writeCondorSub(_fsub,_executable,_opts['queue'],_opts['nCats'],_opts['jobOpts'],dir="fTest") # max_runtime=_opts['max_runtime']
+      if( not _opts['groupSignalFitJobsByCat'] ): writeCondorSub(_fsub,_executable,_opts['queue'],_opts['nCats']*_opts['nProcs'],_opts['jobOpts'],_opts['max_runtime'])
+      else: writeCondorSub(_fsub,_executable,_opts['queue'],_opts['nCats'],_opts['jobOpts'],_opts['max_runtime'])
+    elif( _opts['mode'] == "calcPhotonSyst" )|( _opts['mode'] == "fTest" )|( _opts['mode'] == "packageSignal" ): writeCondorSub(_fsub,_executable,_opts['queue'],_opts['nCats'],_opts['jobOpts'],_opts['max_runtime'])
     _fsub.close()
     
   # SGE...
@@ -151,8 +172,8 @@ def writeSubFiles(_opts):
       for cidx in range(_opts['nCats']):
         c = _opts['cats'].split(",")[cidx]
         _f = open("%s/%s_%s.sh"%(_jobdir,_executable,c),"w")
-        writePreamble(_f)
-        _f.write("python3 %s/scripts/calcPhotonSyst_parquet.py --cat %s --procs %s --ext %s --inputDir %s --scales \'%s\' --scalesCorr \'%s\' --scalesGlobal \'%s\' --smears \'%s\' %s\n"%(swd__,c,_opts['procs'],_opts['ext'],_opts['inputWSDir'],_opts['scales'],_opts['scalesCorr'],_opts['scalesGlobal'],_opts['smears'],_opts['modeOpts']))
+        writePreambleStandalone(_f)
+        _f.write("python3 %s/scripts/calcPhotonSyst_parquet.py --cat %s --procs %s --ext %s --inputDir %s --scales \'%s\' --scalesCorr \'%s\' --scalesGlobal \'%s\' --smears \'%s\' --categories \'%s\' %s\n"%(swd__,c,_opts['procs'],_opts['ext'],_opts['inputWSDir'],_opts['scales'],_opts['scalesCorr'],_opts['scalesGlobal'],_opts['smears'],_opts['categories'],_opts['modeOpts']))
         _f.close()
         os.system("chmod 775 %s/%s_%s.sh"%(_jobdir,_executable,c))
 

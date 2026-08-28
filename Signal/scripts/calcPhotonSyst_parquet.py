@@ -5,6 +5,7 @@
 print(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HGG PHOTON SYST CALCULATOR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ")
 import os
 import re
+import json
 from optparse import OptionParser
 
 import pandas as pd
@@ -98,6 +99,8 @@ def get_options():
   parser = OptionParser()
   parser.add_option("--xvar", dest='xvar', default='CMS_hgg_mass', help="Observable")
   parser.add_option("--cat", dest='cat', default='', help="RECO category")
+  parser.add_option("--category", dest='category', default='pred_C1_reco', type=str, help='the columnn that categories are defined: STXS it is category and for kl is pred_C1_reco') # for STXS this is 'category'
+  parser.add_option("--categories", dest='categories', default='', help="JSON-encoded dict mapping pred_C1_reco int (as string) to category name, e.g. Parquet2WS/config_kl.json's 'categories' entry")
   parser.add_option("--procs", dest='procs', default='', help="Signal processes")
   parser.add_option("--ext", dest='ext', default='', help="Extension")
   parser.add_option("--inputDir", dest='inputDir', default='', help="Input parquet directory")
@@ -111,6 +114,13 @@ def get_options():
   parser.add_option("--thresholdRate", dest='thresholdRate', default=0.05, type='float', help='Reject mean variations if larger than thresholdRate')
   return parser.parse_args()
 (opt,args) = get_options()
+
+# Map pred_C1_reco int (as string) to category name, same convention as Parquet2WS/parquet2ws_mc.py
+categoriesMap = json.loads(opt.categories) if opt.categories != '' else {}
+def applyCategoriesMap(df):
+  if categoriesMap: df[opt.category] = df[opt.category].map(str).map(categoriesMap)
+  if 'mass' in df.columns: df = df.rename(columns={'mass':'CMS_hgg_mass'})
+  return df
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Define dataFrame
@@ -129,10 +139,10 @@ for proc in opt.procs.split(","):
 
   # Open nominal parquet file and extract mean, sigma and rate
   input_file = "%s/events__%s.parquet"%(opt.inputDir,proc)
-  nominal_df = pd.read_parquet(input_file)
+  nominal_df = applyCategoriesMap(pd.read_parquet(input_file))
 
   # Extract events for the given category
-  mask = nominal_df['category'] == opt.cat
+  mask = nominal_df[opt.category] == opt.cat
 
   # Extract numbers of events
   n_nominal = len(nominal_df[mask])
@@ -159,8 +169,8 @@ for proc in opt.procs.split(","):
       # Up variation
       input_dir_syst_up = re.sub("nominal", "%s/up"%s, opt.inputDir)
       input_file_syst_up = "%s/events__%s.parquet"%(input_dir_syst_up,proc)
-      syst_up_df = pd.read_parquet(input_file_syst_up)
-      mask_syst_up = syst_up_df['category'] == opt.cat
+      syst_up_df = applyCategoriesMap(pd.read_parquet(input_file_syst_up))
+      mask_syst_up = syst_up_df[opt.category] == opt.cat
       n_syst_up = len(syst_up_df[mask_syst_up])
       if n_syst_up <= 0:
         mean_syst_up = mean_nominal
@@ -172,8 +182,8 @@ for proc in opt.procs.split(","):
       # Down variation
       input_dir_syst_down = re.sub("nominal", "%s/down"%s, opt.inputDir)
       input_file_syst_down = "%s/events__%s.parquet"%(input_dir_syst_down,proc)
-      syst_down_df = pd.read_parquet(input_file_syst_down)
-      mask_syst_down = syst_down_df['category'] == opt.cat
+      syst_down_df = applyCategoriesMap(pd.read_parquet(input_file_syst_down))
+      mask_syst_down = syst_down_df[opt.category] == opt.cat
       n_syst_down = len(syst_down_df[mask_syst_down])
       if n_syst_down <= 0:
         mean_syst_down = mean_nominal
