@@ -31,8 +31,8 @@ def extractListOfProcs( _listOfWSFileNames, mode="root" ):
   
   for fName in _listOfWSFileNames:
     p = fName.split("__")[-1].split(f".{mode}")[0]
-    if (p not in procs): 
-        if p != "Data":
+    if (p not in procs):
+        if p not in ["Data","background"]:
             procs.append(p)
   return ",".join(procs)
 

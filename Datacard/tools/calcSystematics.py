@@ -71,8 +71,8 @@ def factoryType(d,s):
     f = pq.ParquetFile(r['inputFile']).read()
     columns = f.schema.names
 
-    syst_up_file = re.sub("nominal", "%s/Up"%s['name'], r['inputFile'])
-    syst_down_file = re.sub("nominal", "%s/Down"%s['name'], r['inputFile'])
+    syst_up_file = re.sub("nominal", "%s/up"%s['name'], r['inputFile'])
+    syst_down_file = re.sub("nominal", "%s/down"%s['name'], r['inputFile'])
 
     if ("%sUp"%s['name'] in columns)&("%sDown"%s['name'] in columns):
         return "a_w"
@@ -88,7 +88,7 @@ def factoryType(d,s):
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Function to extract yield variations for signal row in dataFrame
-def calcSystYields(inputFile, systFactoryTypes, proc="GG2H_0J_PTH_0_10", year='2022preEE', cat='RECO_0J_PTH_0_10', ignoreWarnings=False):
+def calcSystYields(inputFile, systFactoryTypes, proc="GG2H_0J_PTH_0_10", year='2022preEE', cat='RECO_0J_PTH_0_10', ignoreWarnings=False, category='pred_C1_reco', categoriesMap={}):
 
   errMessage = "WARNING" if ignoreWarnings else "ERROR"
   errString = "Using nominal yield" if ignoreWarnings else ""
@@ -98,9 +98,9 @@ def calcSystYields(inputFile, systFactoryTypes, proc="GG2H_0J_PTH_0_10", year='2
   # Loop over systematics and create counter in dict
   for s, f in systFactoryTypes.items():
     if f in ["a_h","a_w"]:
-      for direction in ['up','down']: 
+      for direction in ['up','down']:
         systYields["%s_%s"%(s,direction)] = 0
-    else: 
+    else:
       systYields[s] = 0
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -109,8 +109,9 @@ def calcSystYields(inputFile, systFactoryTypes, proc="GG2H_0J_PTH_0_10", year='2
   # Extract data
   f = pq.ParquetFile(inputFile).read()
   df = f.to_pandas()
+  if categoriesMap: df[category] = df[category].map(str).map(categoriesMap)
   columns = df.columns
-  mask_cat = (df['category'] == cat)
+  mask_cat = (df[category] == cat)
   df_subset = df[mask_cat]
 
   # CHECK: is weight in contents: if not then add syst to systToSkip container + print warning
@@ -150,10 +151,29 @@ def calcSystYields(inputFile, systFactoryTypes, proc="GG2H_0J_PTH_0_10", year='2
         systYields[s] = df_subset[s].sum()
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # For systematics stored as separate RooDataHists
+  # For systematics stored as separate parquet files (up/down)
   for s, f in systFactoryTypes.items():
     if f == "a_h":
-      print("TO IMPLEMENT")
+      syst_up_file = re.sub("nominal", "%s/up"%s, inputFile)
+      syst_down_file = re.sub("nominal", "%s/down"%s, inputFile)
+      if( not os.path.exists(syst_up_file) )|( not os.path.exists(syst_down_file) ):
+        systToSkip.append(s)
+        print(" --> [%s] Parquet for systematic (%s) does not exist for (%s,%s). %s"%(errMessage,s,proc,year,errString))
+        if not ignoreWarnings: sys.exit(1)
+
+      # Open parquet files and extract yields
+      f_up = pq.ParquetFile(syst_up_file).read()
+      f_down = pq.ParquetFile(syst_down_file).read()
+      df_up = f_up.to_pandas()
+      df_down = f_down.to_pandas()
+      sumw_up = df_up[df_up['category']==cat]['weight'].sum()
+      sumw_down = df_down[df_down['category']==cat]['weight'].sum()
+      if s in systToSkip:
+        systYields["%s_up"%s] = df_subset['weight'].sum()
+        systYields["%s_down"%s] = df_subset['weight'].sum()
+      else:
+        systYields["%s_up"%s] = sumw_up
+        systYields["%s_down"%s] = sumw_down 
         
   # Add variations to dataFrame
   return systYields

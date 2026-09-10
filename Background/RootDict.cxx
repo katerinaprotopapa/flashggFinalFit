@@ -62,7 +62,7 @@ namespace ROOT {
       ::PdfModelBuilder *ptr = nullptr;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::PdfModelBuilder));
       static ::ROOT::TGenericClassInfo 
-         instance("PdfModelBuilder", "interface/PdfModelBuilder.h", 21,
+         instance("PdfModelBuilder", "PdfModelBuilder.h", 21,
                   typeid(::PdfModelBuilder), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &PdfModelBuilder_Dictionary, isa_proxy, 0,
                   sizeof(::PdfModelBuilder) );
@@ -107,7 +107,7 @@ namespace ROOT {
       ::ProfileMultiplePdfs *ptr = nullptr;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::ProfileMultiplePdfs));
       static ::ROOT::TGenericClassInfo 
-         instance("ProfileMultiplePdfs", "interface/ProfileMultiplePdfs.h", 18,
+         instance("ProfileMultiplePdfs", "ProfileMultiplePdfs.h", 18,
                   typeid(::ProfileMultiplePdfs), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &ProfileMultiplePdfs_Dictionary, isa_proxy, 0,
                   sizeof(::ProfileMultiplePdfs) );
@@ -152,7 +152,7 @@ namespace ROOT {
       ::RooExponentialSum *ptr = nullptr;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::RooExponentialSum));
       static ::ROOT::TGenericClassInfo 
-         instance("RooExponentialSum", "interface/RooExponentialSum.h", 26,
+         instance("RooExponentialSum", "RooExponentialSum.h", 26,
                   typeid(::RooExponentialSum), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &RooExponentialSum_Dictionary, isa_proxy, 0,
                   sizeof(::RooExponentialSum) );
@@ -197,7 +197,7 @@ namespace ROOT {
       ::RooPowerLaw *ptr = nullptr;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::RooPowerLaw));
       static ::ROOT::TGenericClassInfo 
-         instance("RooPowerLaw", "interface/RooPowerLaw.h", 25,
+         instance("RooPowerLaw", "RooPowerLaw.h", 25,
                   typeid(::RooPowerLaw), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &RooPowerLaw_Dictionary, isa_proxy, 0,
                   sizeof(::RooPowerLaw) );
@@ -242,7 +242,7 @@ namespace ROOT {
       ::RooPowerLawSum *ptr = nullptr;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::RooPowerLawSum));
       static ::ROOT::TGenericClassInfo 
-         instance("RooPowerLawSum", "interface/RooPowerLawSum.h", 26,
+         instance("RooPowerLawSum", "RooPowerLawSum.h", 26,
                   typeid(::RooPowerLawSum), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &RooPowerLawSum_Dictionary, isa_proxy, 0,
                   sizeof(::RooPowerLawSum) );
@@ -285,7 +285,7 @@ namespace ROOT {
       ::WSTFileWrapper *ptr = nullptr;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::WSTFileWrapper));
       static ::ROOT::TGenericClassInfo 
-         instance("WSTFileWrapper", "interface/WSTFileWrapper.h", 10,
+         instance("WSTFileWrapper", "WSTFileWrapper.h", 10,
                   typeid(::WSTFileWrapper), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &WSTFileWrapper_Dictionary, isa_proxy, 0,
                   sizeof(::WSTFileWrapper) );
@@ -444,6 +444,10 @@ namespace {
 nullptr
     };
     static const char* includePaths[] = {
+"/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/flashggFinalFit/Background/interface",
+"/cvmfs/cms.cern.ch/el9_amd64_gcc12/lcg/root/6.30.07-8b1a11e1ef0e074fdfd44e162b27e71c//include",
+"/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/",
+"/cvmfs/cms.cern.ch/el9_amd64_gcc12/cms/cmssw/CMSSW_14_1_0_pre4/src/",
 "/cvmfs/cms.cern.ch/el9_amd64_gcc12/lcg/root/6.30.07-8b1a11e1ef0e074fdfd44e162b27e71c//include",
 "/cvmfs/cms.cern.ch/el9_amd64_gcc12/lcg/root/6.30.07-8b1a11e1ef0e074fdfd44e162b27e71c/include/",
 "/vols/cms/evp18/higgsdna_finalfits_tutorial_24/07_FinalFits/CMSSW_14_1_0_pre4/src/flashggFinalFit/Background/",

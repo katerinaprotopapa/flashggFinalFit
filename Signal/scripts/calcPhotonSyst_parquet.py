@@ -100,7 +100,7 @@ def get_options():
   parser.add_option("--xvar", dest='xvar', default='CMS_hgg_mass', help="Observable")
   parser.add_option("--cat", dest='cat', default='', help="RECO category")
   parser.add_option("--category", dest='category', default='pred_C1_reco', type=str, help='the columnn that categories are defined: STXS it is category and for kl is pred_C1_reco') # for STXS this is 'category'
-  parser.add_option("--categories", dest='categories', default='', help="JSON-encoded dict mapping pred_C1_reco int (as string) to category name, e.g. Parquet2WS/config_kl.json's 'categories' entry")
+  parser.add_option("--categories", dest='categories', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Parquet2WS', 'config_kl.json'), help="Path to Parquet2WS config JSON (e.g. Parquet2WS/config_kl.json) or a JSON-encoded dict directly, mapping pred_C1_reco int (as string) to category name")
   parser.add_option("--procs", dest='procs', default='', help="Signal processes")
   parser.add_option("--ext", dest='ext', default='', help="Extension")
   parser.add_option("--inputDir", dest='inputDir', default='', help="Input parquet directory")
@@ -116,7 +116,10 @@ def get_options():
 (opt,args) = get_options()
 
 # Map pred_C1_reco int (as string) to category name, same convention as Parquet2WS/parquet2ws_mc.py
-categoriesMap = json.loads(opt.categories) if opt.categories != '' else {}
+if opt.categories == '': categoriesMap = {}
+elif os.path.isfile(opt.categories):
+  with open(opt.categories, 'r') as _cf: categoriesMap = json.load(_cf)['categories']
+else: categoriesMap = json.loads(opt.categories)
 def applyCategoriesMap(df):
   if categoriesMap: df[opt.category] = df[opt.category].map(str).map(categoriesMap)
   if 'mass' in df.columns: df = df.rename(columns={'mass':'CMS_hgg_mass'})

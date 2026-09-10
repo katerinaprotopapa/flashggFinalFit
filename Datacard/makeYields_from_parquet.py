@@ -1,6 +1,7 @@
 # Script to calculate yields from input parquets
 import os, sys
 import re
+import json
 from optparse import OptionParser
 import glob
 import pickle
@@ -11,7 +12,7 @@ import pandas as pd
 import pyarrow.parquet as pq
 
 from collections import OrderedDict
-from systematics import theory_systematics, experimental_systematics, signal_shape_systematics
+from systematics_kl import theory_systematics, experimental_systematics, signal_shape_systematics
 
 from commonObjects import *
 from commonTools import *
@@ -40,8 +41,20 @@ def get_options():
   # For systematics:
   parser.add_option('--doSystematics', dest='doSystematics', default=False, action="store_true", help="Include systematics calculations and add to datacard")
   parser.add_option('--ignore-warnings', dest='ignore_warnings', default=False, action="store_true", help="Skip errors for missing systematics. Instead output warning message")
+  parser.add_option("--category", dest='category', default='pred_C1_reco', type=str, help='the columnn that categories are defined: STXS it is category and for kl is pred_C1_reco')
+  parser.add_option("--categories", dest='categories', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Parquet2WS', 'config_kl.json'), help="Path to Parquet2WS config JSON (e.g. Parquet2WS/config_kl.json) or a JSON-encoded dict directly, mapping pred_C1_reco int (as string) to category name")
   return parser.parse_args()
 (opt,args) = get_options()
+
+# Map pred_C1_reco int (as string) to category name, same convention as Parquet2WS/parquet2ws_mc.py
+if opt.categories == '': categoriesMap = {}
+elif os.path.isfile(opt.categories):
+  with open(opt.categories, 'r') as _cf: categoriesMap = json.load(_cf)['categories']
+else: categoriesMap = json.loads(opt.categories)
+def applyCategoriesMap(df):
+  if categoriesMap: df[opt.category] = df[opt.category].map(str).map(categoriesMap)
+  if 'mass' in df.columns: df = df.rename(columns={'mass':'CMS_hgg_mass'})
+  return df
 
 # Extract years and inputWSDir
 inputParquetDirMap = od()
@@ -91,9 +104,9 @@ for year in years:
 
     # If opt.skipZeroes check nominal yield if 0 then do not add
     f = pq.ParquetFile(_inputFile).read()
-    df = f.to_pandas()
+    df = applyCategoriesMap(f.to_pandas())
 
-    mask_cat = (df['category'] == opt.cat)
+    mask_cat = (df[opt.category] == opt.cat)
     if df[mask_cat]['weight'].sum() == 0:
         continue
 
@@ -185,8 +198,8 @@ for ir,r in data[data['type']=='sig'].iterrows():
 
   # Open parquet file and extract events
   f = pq.ParquetFile(r['inputFile']).read()
-  df = f.to_pandas()
-  mask_cat = (df['category'] == r['cat'])
+  df = applyCategoriesMap(f.to_pandas())
+  mask_cat = (df[opt.category] == r['cat'])
   df_subset = df[mask_cat]
 
   # Calculate nominal yield
@@ -199,7 +212,7 @@ for ir,r in data[data['type']=='sig'].iterrows():
   if opt.doSystematics:
 
     # For experimental systematics
-    experimentalSystYields = calcSystYields(r['inputFile'], experimentalFactoryType, proc=r['proc'], year=r['year'], cat=r['cat'], ignoreWarnings=opt.ignore_warnings)
+    experimentalSystYields = calcSystYields(r['inputFile'], experimentalFactoryType, proc=r['proc'], year=r['year'], cat=r['cat'], ignoreWarnings=opt.ignore_warnings, category=opt.category, categoriesMap=categoriesMap)
 
     for s,f in experimentalFactoryType.items():
       if f in ['a_w','a_h']: 
@@ -209,7 +222,7 @@ for ir,r in data[data['type']=='sig'].iterrows():
         data.at[ir,"%s_yield"%s] = experimentalSystYields[s]
 
     # For theoretical systematics:
-    theorySystYields = calcSystYields(r['inputFile'], theoryFactoryType, proc=r['proc'], year=r['year'], cat=r['cat'], ignoreWarnings=opt.ignore_warnings)
+    theorySystYields = calcSystYields(r['inputFile'], theoryFactoryType, proc=r['proc'], year=r['year'], cat=r['cat'], ignoreWarnings=opt.ignore_warnings, category=opt.category, categoriesMap=categoriesMap)
 
     for s,f in theoryFactoryType.items():
       if f in ['a_w','a_h']: 
