@@ -23,7 +23,8 @@ def writeCondorSub(_file,_exec,_queue,_nJobs,_jobOpts,__max_runtime,doHoldOnFail
   _file.write("executable = %s.sh\n"%_exec)
   _file.write("arguments  = $(ProcId)\n")
   _file.write("output     = %s.$(ClusterId).$(ProcId).out\n"%_exec)
-  _file.write("error      = %s.$(ClusterId).$(ProcId).err\n\n"%_exec)
+  _file.write("error      = %s.$(ClusterId).$(ProcId).err\n"%_exec)
+  _file.write("log      = %s.$(ClusterId).log\n\n"%_exec)
   if _jobOpts != '':
     _file.write("# User specified job options\n")
     for jo in _jobOpts.split(":"): _file.write("%s\n"%jo)
@@ -61,7 +62,7 @@ def writeSubFiles(_opts):
     for cidx in range(_opts['nCats']):
       c = _opts['cats'].split(",")[cidx]
       _f.write("if [ $1 -eq %g ]; then\n"%cidx)
-      _f.write("  python3 %s/makeYields.py --cat %s --procs %s --ext %s --mass %s --inputWSDirMap %s %s\n"%(dwd__,c,_opts['procs'],_opts['ext'],_opts['mass'],_opts['inputWSDirMap'],_opts['modeOpts']))
+      _f.write("  python3 %s/makeYields_from_parquet.py --cat %s --procs %s --ext %s --mass %s --inputParquetDirMap %s %s\n"%(dwd__,c,_opts['procs'],_opts['ext'],_opts['mass'],_opts['inputParquetDirMap'],_opts['modeOpts']))
       _f.write("fi\n")
       
     # Close .sh file
@@ -81,7 +82,7 @@ def writeSubFiles(_opts):
       c = _opts['cats'].split(",")[cidx]
       _f = open("%s/%s_%s.sh"%(_jobdir,_executable,c),"w")
       writePreamble(_f)
-      _f.write("python3 %s/makeYields.py --cat %s --procs %s --ext %s --mass %s --inputWSDirMap %s --sigModelWSDir %s --sigModelExt %s --bkgModelWSDir %s --bkgModelExt %s %s\n"%(dwd__,c,_opts['procs'],_opts['ext'],_opts['mass'],_opts['inputWSDirMap'],_opts['sigModelWSDir'],_opts['sigModelExt'],_opts['bkgModelWSDir'],_opts['bkgModelExt'],_opts['modeOpts']))
+      _f.write("python3 %s/makeYields_from_parquet.py --cat %s --procs %s --ext %s --mass %s --inputParquetDirMap %s %s\n"%(dwd__,c,_opts['procs'],_opts['ext'],_opts['mass'],_opts['inputParquetDirMap'],_opts['modeOpts']))
       _f.close()
       os.system("chmod 775 %s/%s_%s.sh"%(_jobdir,_executable,c))
 

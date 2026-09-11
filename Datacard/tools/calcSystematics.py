@@ -7,6 +7,14 @@ from commonObjects import *
 
 # sd = "systematics dataframe"
 
+nuisance_year_map = {
+  '2022preEE':'2022',
+  '2022postEE':'2022EE',
+  '2023preBPix':'2023',
+  '2023postBPix':'2023BPix',
+  '2024':'2024'
+}
+
 # For constant systematics:
 def addConstantSyst(sd,_syst,options):
 
@@ -36,8 +44,8 @@ def addConstantSyst(sd,_syst,options):
   # If not correlate across years then create separate columns for each year and fill separately
   else:
     for year in options.years.split(","):
-      sd["%s_%s"%(_syst['name'],year)] = '-'
-      sd.loc[(sd['type']=='sig')&(sd['year']==year)&(~sd['cat'].str.contains("NOTAG")), "%s_%s"%(_syst['name'],year)] = _syst['value'][year]
+      sd["%s_%s"%(_syst['name'],nuisance_year_map[year])] = '-'
+      sd.loc[(sd['type']=='sig')&(sd['year']==year)&(~sd['cat'].str.contains("NOTAG")), "%s_%s"%(_syst['name'],nuisance_year_map[year])] = _syst['value'][year]
 
   return sd
 
@@ -189,7 +197,7 @@ def experimentalSystFactory(d,systs,ftype,options,_removal=False):
     if s['type'] == 'constant': continue
     if s['correlateAcrossYears']: d[s['name']] = '-'
     else:
-      for year in options.years.split(","): d['%s_%s'%(s['name'],year)] = '-'
+      for year in options.years.split(","): d['%s_%s'%(s['name'],nuisance_year_map[year])] = '-'
 
   # Loop over systematics and fill entries for rows which satisfy mask
   for s in systs:
@@ -202,7 +210,7 @@ def experimentalSystFactory(d,systs,ftype,options,_removal=False):
     else:
       for year in options.years.split(","):
         mask = (d['type']=='sig')&(~d['cat'].str.contains("NOTAG"))&(d['year']==year)
-        d.loc[mask,'%s_%s'%(s['name'],year)] = d[mask].apply(lambda x: compareYield(x,f,s['name']), axis=1)
+        d.loc[mask,'%s_%s'%(s['name'],nuisance_year_map[year])] = d[mask].apply(lambda x: compareYield(x,f,s['name']), axis=1)
 
     # Remove yield columns from dataFrame
     if _removal:
