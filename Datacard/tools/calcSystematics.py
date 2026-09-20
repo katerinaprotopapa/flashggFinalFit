@@ -9,9 +9,13 @@ from commonObjects import *
 
 nuisance_year_map = {
   '2022preEE':'2022',
+  'preEE': '2022',
   '2022postEE':'2022EE',
+  'postEE':'2022EE',
   '2023preBPix':'2023',
+  'preBPix':'2023',
   '2023postBPix':'2023BPix',
+  'postBPix':'2023BPix',
   '2024':'2024'
 }
 
@@ -174,8 +178,13 @@ def calcSystYields(inputFile, systFactoryTypes, proc="GG2H_0J_PTH_0_10", year='2
       f_down = pq.ParquetFile(syst_down_file).read()
       df_up = f_up.to_pandas()
       df_down = f_down.to_pandas()
-      sumw_up = df_up[df_up['category']==cat]['weight'].sum()
-      sumw_down = df_down[df_down['category']==cat]['weight'].sum()
+      if categoriesMap:
+        for _d in (df_up, df_down):
+          if not _d[category].map(str).isin(categoriesMap.keys()).any():
+            continue  # already string labels, leave as is
+          _d[category] = _d[category].map(str).map(categoriesMap)
+      sumw_up = df_up[df_up[category]==cat]['weight'].sum()
+      sumw_down = df_down[df_down[category]==cat]['weight'].sum()
       if s in systToSkip:
         systYields["%s_up"%s] = df_subset['weight'].sum()
         systYields["%s_down"%s] = df_subset['weight'].sum()
@@ -243,17 +252,18 @@ def theorySystFactory(d,systs,ftype,options,stxsMergeScheme=None,_removal=False)
 
   # Calculate the per-STXS bin (per-year already in proc name) yield variations: add as column in dataFrame
   for proc in d[d['type']=='sig'].proc.unique():
-    mask = (d['proc']==proc)
-    d.loc[mask,'proc_nominal_yield'] = d[mask]['nominal_yield%s'%corrExt].sum() 
-    for s in systs:
-      if s['type'] == 'constant': continue
-      mask = (d['proc']==proc)
-      f = ftype[s['name']]
-      if f in ['a_w','a_h']: 
-        for direction in ['up','down']: 
-          d.loc[mask,'proc_%s_%s_yield'%(s['name'],direction)] = d[mask]['%s_%s_yield%s'%(s['name'],direction,corrExt)].sum()
-      else: 
-        d.loc[mask,'proc_%s_yield'%s['name']] = d[mask]['%s_yield%s'%(s['name'],corrExt)].sum()
+    for year in options.years.split(","):
+      mask = (d['proc']==proc) & (d['year']==year) # changing this as for me (kl) 'proc' does not contain the year already
+      d.loc[mask,'proc_nominal_yield'] = d[mask]['nominal_yield%s'%corrExt].sum() 
+      for s in systs:
+        if s['type'] == 'constant': continue
+        mask = (d['proc']==proc)
+        f = ftype[s['name']]
+        if f in ['a_w','a_h']: 
+          for direction in ['up','down']: 
+            d.loc[mask,'proc_%s_%s_yield'%(s['name'],direction)] = d[mask]['%s_%s_yield%s'%(s['name'],direction,corrExt)].sum()
+        else: 
+          d.loc[mask,'proc_%s_yield'%s['name']] = d[mask]['%s_yield%s'%(s['name'],corrExt)].sum()
 
   # Loop over systematics and add new column in dataFrame for each tier
   for s in systs:

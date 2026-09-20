@@ -5,9 +5,13 @@ from commonObjects import *
 
 nuisance_year_map = {
   '2022preEE':'2022',
+  'preEE': '2022',
   '2022postEE':'2022EE',
+  'postEE':'2022EE',
   '2023preBPix':'2023',
+  'preBPix':'2023',
   '2023postBPix':'2023BPix',
+  'postBPix':'2023BPix',
   '2024':'2024'
 }
 
@@ -222,7 +226,7 @@ def writePdfIndex(f,d,options):
 
 def writeRateParams(f,):
   # Add rateParam (shape-only effect for kl)
-  f.write("mu_ttH rateParam * TTH_* 1. [-5,4]\n")  # Add this line for the rateParam
+  f.write("mu_ttH rateParam * TTH_* 1. [-10,10]\n")  # Add this line for the rateParam
 
 def writeLumiParams(f,):
   # Add lumi-scale parameter
