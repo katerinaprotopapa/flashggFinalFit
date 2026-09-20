@@ -37,7 +37,8 @@ fsub = open("./t2w_jobs/t2w_%s%s.sh"%(opt.mode,opt.ext),"w")
 fsub.write("#!/bin/bash\n\n")
 fsub.write("cd %s\n\n"%os.environ['PWD'])
 fsub.write("eval `scramv1 runtime -sh`\n\n")
-fsub.write("text2workspace.py Datacard%s.txt -o Datacard%s_%s.root %s %s"%(opt.ext,opt.ext,opt.mode,opt.common_opts,models[opt.mode]))
+# fsub.write("text2workspace.py Datacard%s.txt -o Datacard%s_%s.root %s %s"%(opt.ext,opt.ext,opt.mode,opt.common_opts,models[opt.mode]))
+fsub.write("text2workspace.py Datacard%s.txt -o Datacard%s_%s.root --channel-masks %s %s"%(opt.ext,opt.ext,opt.mode,opt.common_opts,models[opt.mode])) # adding --channel-masks in to be able to mask categories in the NLL. Note if you do not specify to mask categories should be just as before
 fsub.close()
 
 # Change permission for file

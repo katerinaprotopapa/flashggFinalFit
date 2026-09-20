@@ -10,5 +10,12 @@
         "fits":"profile1D:statonly:k_lambda",
         "points":"67:20",
         "fit_opts":"--saveInactivePOI 1 --setParameterRanges k_lambda=-20,49.3 --setParameters lumi_scale=1.74 --freezeParameters MH,lumi_scale,allConstrainedNuisances --saveSpecifiedNuis all"
+    },
+
+    "kl_STXScomparison":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonly:k_lambda",
+        "points":"67:20+1",
+        "fit_opts": "--saveInactivePOI 1 --setParameterRanges k_lambda=-20,49.3 --setParameters lumi_scale=4.81,mask_RECO_WH_lep_PTV_0_150=1,mask_RECO_WH_lep_PTV_GT150=1,mask_RECO_ZH_lep=1,mask_RECO_ggH_0J_PTH_0_10=1,mask_RECO_ggH_0J_PTH_GT10_wbbH=1,mask_RECO_ggH_1J_PTH_0_60=1,mask_RECO_ggH_1J_PTH_120_200=1,mask_RECO_ggH_1J_PTH_60_120=1,mask_RECO_ggH_GE2J_MJJ_0_350_PTH_0_60=1,mask_RECO_ggH_GE2J_MJJ_0_350_PTH_120_200=1,mask_RECO_ggH_GE2J_MJJ_0_350_PTH_60_120=1,mask_RECO_ggH_GE2J_MJJ_GT350_PTH_0_200=1,mask_RECO_ggH_PTH_GT200=1,mask_RECO_qqH_GE2J_MJJ_60_120=1,mask_RECO_qqH_GE2J_MJJ_GT350_PTH_0_200=1,mask_RECO_qqH_GE2J_MJJ_GT350_PTH_GT200=1,mask_RECO_qqH_REST=1,mask_RECO_tH=1,mask_RECO_ttH_PTH_0_120=0,mask_RECO_ttH_PTH_GT120=0 --freezeParameters MH,lumi_scale,allConstrainedNuisances --saveSpecifiedNuis all"
     }
 }

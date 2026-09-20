@@ -287,6 +287,9 @@ models = {
   "kl_C1reco":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH \
   --PO C1_gen_avg_cat_json=\"C1_gen_avg_cat_C1_reco.json\"",
 
+  "kl_STXScomparison":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH_STXScomparison \
+    --PO C1_stxs_json=\"C1_gen_avg_cat_C1_reco_STXScomparison.json\"",
+
   "kl_pt":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH \
   --PO C1_gen_avg_cat_json=\"C1_gen_avg_cat_pt.json\"",
 
