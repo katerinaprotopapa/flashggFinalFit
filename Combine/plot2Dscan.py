@@ -5,25 +5,32 @@ import numpy as np
 ROOT.gROOT.SetBatch(True)
 ROOT.gStyle.SetOptStat(0)
 
-file_name = "incl.root" # found in runFits_C1reco_lumi300_kl_C1reco dir
+file_name = "incl.root" # found in runFits_C1reco_muttH_klambda dir
+
+# Luminosity label: card lumi (2022-2025, sum of lumiMap in tools/commonObjects.py) times the lumi_scale used in the fit
+card_lumi = 282.64 # fb^-1
+lumi_scale = 1.0 # must match --setParameters lumi_scale in inputs_tutorial_profile2D_syst.json
 f = ROOT.TFile(file_name)
 t = f.Get("limit")
-
-# Number of points in interpolation
-n_points = 1000
 
 # Number of bins in plot
 n_bins = 45
 
-# quantileExpected == -1 rows are the per-job best-fit snapshot, not part of
-# the scanned (k_lambda, mu_ttH) grid - exclude them so the grid reshape below is clean
+# quantileExpected == -1 rows are the per-job best-fit snapshot (one duplicate
+# per split condor job, all echoing the same combine-determined minimum) - pull
+# the true bestfit coordinates from here rather than from the grid
+# interpolation below, then exclude them so the grid reshape stays clean
+bf_kl, bf_mu = None, None
 x, y, deltaNLL = [], [], []
 for ev in t:
     if ev.quantileExpected == -1:
+        if bf_kl is None:
+            bf_kl, bf_mu = getattr(ev, "k_lambda"), getattr(ev, "mu_ttH")
         continue
     x.append(getattr(ev, "k_lambda"))
     y.append(getattr(ev, "mu_ttH"))
     deltaNLL.append(getattr(ev, "deltaNLL"))
+assert bf_kl is not None, "no quantileExpected == -1 bestfit row found in tree"
 
 # Plot only out to the actual extent of the scanned grid - the combine grid
 # (with --alignEdges) can fall a bit short of the --setParameterRanges bounds,
@@ -55,31 +62,27 @@ assert not np.isnan(z_grid).any(), "missing point(s) in the (k_lambda, mu_ttH) s
 
 interp = RegularGridInterpolator((kl_vals, mu_vals), z_grid, method="linear", bounds_error=False, fill_value=np.nan)
 
-# Set up grid, restricted to the convex hull of the actual scan (points outside
-# get NaN from interp and are dropped below, same as the old griddata behaviour)
-grid_x, grid_y = np.mgrid[x_range[0] : x_range[1] : n_points * 1j, y_range[0] : y_range[1] : n_points * 1j]
-grid_vals = interp(np.stack([grid_x.ravel(), grid_y.ravel()], axis=-1)).reshape(grid_x.shape)
+# Define histogram and fill each bin directly from the interpolator, evaluated
+# once at the bin center. A TProfile2D filled from a dense mesh of
+# interpolated points and averaged down to display resolution was considered
+# instead: averaging the (convex, curved-near-the-minimum) -2*deltaNLL surface
+# over a bin's area isn't exactly equal to its value at the bin center, and
+# evaluating directly at the center avoids that bias as well as the cost of
+# generating and averaging a ~1M-point mesh.
+h2D = ROOT.TH2D("h", "h", n_bins, x_range[0], x_range[1], n_bins, y_range[0], y_range[1])
 
-# Remove NANS
-grid_x = grid_x[grid_vals == grid_vals]
-grid_y = grid_y[grid_vals == grid_vals]
-grid_vals = grid_vals[grid_vals == grid_vals]
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# Define Profile2D histogram
-h2D = ROOT.TProfile2D("h", "h", n_bins, x_range[0], x_range[1], n_bins, y_range[0], y_range[1])
-
-for i in range(len(grid_vals)):
-    # Factor of 2 comes from 2*NLL
-    h2D.Fill(grid_x[i], grid_y[i], 2 * grid_vals[i])
-
-# Loop over bins: if content = 0 then set 999
 for ibin in range(1, h2D.GetNbinsX() + 1):
     for jbin in range(1, h2D.GetNbinsY() + 1):
-        if h2D.GetBinContent(ibin, jbin) == 0:
-            xc = h2D.GetXaxis().GetBinCenter(ibin)
-            yc = h2D.GetYaxis().GetBinCenter(jbin)
-            h2D.Fill(xc, yc, 999)
+        xc = h2D.GetXaxis().GetBinCenter(ibin)
+        yc = h2D.GetYaxis().GetBinCenter(jbin)
+        v = interp(np.array([[xc, yc]]))[0]
+        # Factor of 2 comes from 2*NLL. Bin centers outside the scanned grid's
+        # convex hull (shouldn't occur here since x_range/y_range are set to
+        # that exact hull, but kept as a defensive fallback) come back NaN
+        # from interp - mark those excluded (999) rather than leaving the
+        # TH2D default of 0, which would be misread as the best-fit minimum.
+        h2D.SetBinContent(ibin, jbin, 999 if np.isnan(v) else 2 * v)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Set up canvas
 canv = ROOT.TCanvas("canv", "canv", 600, 600)
@@ -147,7 +150,7 @@ gSM.SetMarkerColor(ROOT.kRed)
 gSM.Draw("P")
 
 gBF = ROOT.TGraph()
-gBF.SetPoint(0, grid_x[np.argmin(grid_vals)], grid_y[np.argmin(grid_vals)])
+gBF.SetPoint(0, bf_kl, bf_mu)
 gBF.SetMarkerStyle(34)
 gBF.SetMarkerSize(2)
 gBF.SetMarkerColor(ROOT.kBlack)
@@ -164,5 +167,8 @@ leg.AddEntry(c95, "2#sigma CL", "L")
 leg.AddEntry(gSM, "SM", "P")
 leg.Draw()
 
+lat = ROOT.TLatex(); lat.SetNDC(); lat.SetTextFont(42); lat.SetTextSize(0.037); lat.SetTextAlign(31)
+lat.DrawLatex(1 - canv.GetRightMargin(), 1 - canv.GetTopMargin() + 0.015, "%.1f fb#kern[-0.55]{^{-1}} (13.6 TeV)" % (card_lumi * lumi_scale))
+
 canv.Update()
-canv.SaveAs("scan2D_k_lambda_vs_mu_ttH_lumi300.png")
+canv.SaveAs("scan2D_k_lambda_vs_mu_ttH.png")

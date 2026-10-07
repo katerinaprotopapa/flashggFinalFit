@@ -1,7 +1,26 @@
 {
-    "main_vars" : [
+    "main_vars": [
         "CMS_hgg_mass", "weight", "dZ", "C1_gen",
-        "weight_AlphaSDown", "weight_AlphaSUp", "weight_ElectronIdLooseSFDown", "weight_ElectronIdLooseSFUp", "weight_ElectronIdRecoSFDown", "weight_ElectronIdRecoSFUp", "weight_ElectronVetoSFDown", "weight_ElectronVetoSFUp", "weight_NUM_TightPFIso_DEN_MediumIDDown", "weight_NUM_TightPFIso_DEN_MediumIDUp", "weight_PS_FSRDown", "weight_PS_FSRUp", "weight_PS_ISRDown", "weight_PS_ISRUp", "weight_PileupDown", "weight_PileupUp", "weight_PreselSFDown", "weight_PreselSFUp", "weight_Tau_IDDown", "weight_Tau_IDUp", "weight_TriggerSFDown", "weight_TriggerSFUp"
+        "weight_AlphaSDown", "weight_AlphaSUp",
+        "weight_ElectronIdLooseSFDown", "weight_ElectronIdLooseSFUp",
+        "weight_ElectronIdRecoSFDown", "weight_ElectronIdRecoSFUp",
+        "weight_ElectronVetoSFDown", "weight_ElectronVetoSFUp",
+        "weight_NUM_TightPFIso_DEN_MediumIDDown", "weight_NUM_TightPFIso_DEN_MediumIDUp",
+        "weight_PS_FSRDown", "weight_PS_FSRUp",
+        "weight_PS_ISRDown", "weight_PS_ISRUp",
+        "weight_PileupDown", "weight_PileupUp",
+        "weight_PreselSFDown", "weight_PreselSFUp",
+        "weight_Tau_IDDown", "weight_Tau_IDUp",
+        "weight_TriggerSFDown", "weight_TriggerSFUp",
+        "weight_bTagSF_sys_cferr1Down", "weight_bTagSF_sys_cferr1Up",
+        "weight_bTagSF_sys_cferr2Down", "weight_bTagSF_sys_cferr2Up",
+        "weight_bTagSF_sys_hfDown", "weight_bTagSF_sys_hfUp",
+        "weight_bTagSF_sys_hfstats1Down", "weight_bTagSF_sys_hfstats1Up",
+        "weight_bTagSF_sys_hfstats2Down", "weight_bTagSF_sys_hfstats2Up",
+        "weight_bTagSF_sys_jesDown", "weight_bTagSF_sys_jesUp",
+        "weight_bTagSF_sys_lfDown", "weight_bTagSF_sys_lfUp",
+        "weight_bTagSF_sys_lfstats1Down", "weight_bTagSF_sys_lfstats1Up",
+        "weight_bTagSF_sys_lfstats2Down", "weight_bTagSF_sys_lfstats2Up"
     ],
     "categories": {
         "0": "background",

@@ -32,7 +32,7 @@
 #include "TKey.h"
 
 #include "RooCategory.h"
-#include "HiggsAnalysis/CombinedLimit/interface/RooMultiPdf.h"
+#include "HiggsAnalysis/CombinedLimit/interface/RooMultiPdfCombine.h" // combine >=10.5 (micromamba env): RooMultiPdf.h renamed, getCurrentPdf/getCorrection now inline
 
 #include "../interface/PdfModelBuilder.h"
 #include <Math/PdfFuncMathCore.h>

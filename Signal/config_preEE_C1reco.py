@@ -14,10 +14,10 @@ signalScriptCfg = {
   'massPoints':'125',
 
   #Photon shape systematics
-  'scales':'ScaleEB2G_IJazZ,ScaleEE2G_IJazZ', # separate nuisance per year
-  'scalesCorr':'Material,FNUF', # correlated across years
+  'scales':'ScaleEB_Zee,ScaleEB_Zmmg,ScaleEE_Zee,ScaleEE_Zmmg', # separate nuisance per year
+  'scalesCorr':'', # correlated across years (Material,FNUF not in current production)
   'scalesGlobal':'', # affect all processes equally, correlated across years
-  'smears':'Smearing2G_IJazZ', # separate nuisance per year
+  'smears':'Smearing', # separate nuisance per year
 
   # Maps pred_C1_reco int (as string) to category name, matching Parquet2WS/config_kl.json
   'categories': {

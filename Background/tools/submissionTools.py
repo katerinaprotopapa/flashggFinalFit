@@ -7,7 +7,7 @@ def run(cmd):
   print("%s\n\n"%cmd)
   os.system(cmd)
 
-def writePreamble(_file):
+def writePreambleCMSSW(_file):
   _file.write("#!/bin/bash\n")
   _file.write("ulimit -s unlimited\n")
   _file.write("set -e\n")
@@ -15,6 +15,21 @@ def writePreamble(_file):
   _file.write("export SCRAM_ARCH=%s\n"%os.environ['SCRAM_ARCH'])
   _file.write("source /cvmfs/cms.cern.ch/cmsset_default.sh\n")
   _file.write("eval `scramv1 runtime -sh`\n")
+  _file.write("cd %s\n"%bwd__)
+  _file.write("export PYTHONPATH=$PYTHONPATH:%s/tools:%s/tools\n\n"%(cwd__,bwd__))
+
+# Standalone preamble (flashggFinalFit micromamba env, no CMSSW/scram), as in Signal/tools/submissionTools.py:
+# bin/fTest is built against the env's ROOT/combine, so loading CMSSW's ROOT on top of it segfaults
+def writePreamble(_file):
+  _file.write("#!/bin/bash\n")
+  _file.write("ulimit -s unlimited\n")
+  _file.write("set -e\n")
+  _file.write("export MAMBA_EXE='/home/hep/evp18/.local/bin/micromamba'\n")
+  _file.write("export MAMBA_ROOT_PREFIX='/home/hep/evp18/micromamba'\n")
+  _file.write("eval \"$($MAMBA_EXE shell hook --shell bash --root-prefix $MAMBA_ROOT_PREFIX)\"\n")
+  _file.write("micromamba activate flashggFinalFit\n")
+  _file.write("export CMSSW_BASE=%s\n"%os.environ['CMSSW_BASE'])
+  _file.write("export SCRAM_ARCH=None\n")
   _file.write("cd %s\n"%bwd__)
   _file.write("export PYTHONPATH=$PYTHONPATH:%s/tools:%s/tools\n\n"%(cwd__,bwd__))
 

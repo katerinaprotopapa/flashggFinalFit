@@ -290,6 +290,13 @@ models = {
   "kl_STXScomparison":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH_STXScomparison \
     --PO C1_stxs_json=\"C1_gen_avg_cat_C1_reco_STXScomparison.json\"",
 
+  # Same as kl_STXScomparison but for the Run2 comb_2021 card (process names are ttH_* instead of TTH_*)
+  "kl_STXScomparison_Run2":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH_STXScomparison \
+    --PO C1_stxs_json=\"C1_gen_avg_cat_C1_reco_STXScomparison_Run2.json\"",
+
+  "kl_kvkf":"-P TrilinearCouplingModels:TrilinearHiggsKappaVKappaFSTXS12 \
+    --PO BRU=true --PO TTHOnly=true",
+
   "kl_pt":"-P HiggsAnalysis.CombinedLimit.TrilinearCouplingModels:trilinearHiggsDifferential_ttH \
   --PO C1_gen_avg_cat_json=\"C1_gen_avg_cat_pt.json\"",
 

@@ -49,7 +49,7 @@
 #include "boost/algorithm/string/predicate.hpp"
 #include "../interface/ProfileMultiplePdfs.h"
 
-#include "HiggsAnalysis/CombinedLimit/interface/RooMultiPdf.h"
+#include "HiggsAnalysis/CombinedLimit/interface/RooMultiPdfCombine.h" // combine >=10.5 (micromamba env): RooMultiPdf.h renamed, getCurrentPdf/getCorrection now inline
 #include "HiggsAnalysis/CombinedLimit/interface/RooBernsteinFast.h"
 
 #include <iostream>

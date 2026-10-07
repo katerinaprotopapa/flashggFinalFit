@@ -16,7 +16,8 @@ nuisance_year_map = {
   'preBPix':'2023',
   '2023postBPix':'2023BPix',
   'postBPix':'2023BPix',
-  '2024':'2024'
+  '2024':'2024',
+  '2025':'2025'
 }
 
 # For constant systematics:
@@ -257,10 +258,10 @@ def theorySystFactory(d,systs,ftype,options,stxsMergeScheme=None,_removal=False)
       d.loc[mask,'proc_nominal_yield'] = d[mask]['nominal_yield%s'%corrExt].sum() 
       for s in systs:
         if s['type'] == 'constant': continue
-        mask = (d['proc']==proc)
+        mask = (d['proc']==proc) & (d['year']==year)
         f = ftype[s['name']]
-        if f in ['a_w','a_h']: 
-          for direction in ['up','down']: 
+        if f in ['a_w','a_h']:
+          for direction in ['up','down']:
             d.loc[mask,'proc_%s_%s_yield'%(s['name'],direction)] = d[mask]['%s_%s_yield%s'%(s['name'],direction,corrExt)].sum()
         else: 
           d.loc[mask,'proc_%s_yield'%s['name']] = d[mask]['%s_yield%s'%(s['name'],corrExt)].sum()
@@ -325,6 +326,10 @@ def compareYield(row,factoryType,sname,mode='default',mname=None):
       if row["proc_%s_yield"%sname] == 0: return [1.]
 
   if( mode == 'default' )|( mode == 'ishape' ):
+    # Catch: if a variation empties the proc x cat (MC stats, e.g. single event migrating out) the lnN
+    # would be 0/x, which combine rejects (NaN) - treat as no effect, like the zero nominal case above
+    if factoryType in ["a_w","a_h"]:
+      if (row["%s_down_yield"%sname] <= 0)|(row["%s_up_yield"%sname] <= 0): return [1.,1.]
     # FIX: some a_h variations are not centred around nominal_yield, take symmetric
     if factoryType == "a_h":
       midpoint_yield = 0.5*(row["%s_down_yield"%sname]+row["%s_up_yield"%sname])

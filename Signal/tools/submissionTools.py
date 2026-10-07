@@ -75,8 +75,9 @@ def writeSubFiles(_opts):
     # calcPhotonSyst_parquet.py needs pandas/pyarrow/matplotlib/mplhep, not bundled in CMSSW:
     # use the flashggFinalFit conda env instead (self-consistent, avoids ~/.local ABI mismatches
     # and CMSSW/conda ROOT clashing if both are loaded in the same process)
-    if _opts['mode'] == "calcPhotonSyst": writePreambleStandalone(_f)
-    else: writePreamble(_f)
+    # Use it for all modes so every step runs with the same ROOT/numpy (e.g. calcPhotonSyst pkl
+    # files written with numpy 2 cannot be read by signalFit under CMSSW's numpy 1)
+    writePreambleStandalone(_f)
 
     # Write details depending on mode
 

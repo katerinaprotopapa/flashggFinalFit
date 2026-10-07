@@ -487,7 +487,7 @@ globalReplacementMap['kl_C1reco'] = od()
 #  * single proc x cat for wrong vertex since for dZ > 1cm shape independent of proc x cat
 #  * use proc x cat with highest number of WV events
 globalReplacementMap['kl_C1reco']['procWV'] = "TTH"
-globalReplacementMap['kl_C1reco']['catWV'] = "hadr_C1_10_29"
+globalReplacementMap['kl_C1reco']['catWV'] = "hadr_C1_42_63" # most TTH events in current categorisation
 # For RIGHT VERTEX SCENARIO:
 #  * default mapping is to use diagonal process from given category 
 #  * if few events in diagonal process then may need to change the category aswell (see catRVMap)

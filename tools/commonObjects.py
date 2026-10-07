@@ -18,8 +18,8 @@ lumiMap = {
     '2016':36.33, 
     '2017':41.48, 
     '2018':59.83, 
-    'combined':172.26, # 2022-2024 only
-    'merged':172.26, # 2022-2024 only
+    'combined':282.64, # 2022-2025
+    'merged':282.64, # 2022-2025
     '2022preEE':7.99,
     '2022postEE':26.68,
     'preEE':7.99,
@@ -27,6 +27,7 @@ lumiMap = {
     "preBPix": 17.96,
     "postBPix": 9.68,
     "2024":  109.95,
+    "2025": 110.38
 }
 
 # If using ReReco samples then switch to lumiMap below (missing data in 2018 EGamma data set)
@@ -47,7 +48,7 @@ decayMode = 'hgg'
 
 # List of years
 # years_to_process = ['2016','2017','2018','2022preEE','2022postEE']
-years_to_process = ['preEE', 'postEE', 'preBPix', 'postBPix', '2024']
+years_to_process = ['preEE', 'postEE', 'preBPix', 'postBPix', '2024', '2025']
 
 # flashgg input WS objects
 inputWSName__ = "DiphotonTree/cms_hgg_13TeV"

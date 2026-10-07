@@ -43,7 +43,7 @@ CATEGORIES = [
 ]
 
 # era tags that appear in the naming
-ERA_TAGS = ["preEE", "postEE", "preBPix", "postBPix", "2024"]
+ERA_TAGS = ["2022preEE", "2022postEE", "2023preBPix", "2023postBPix", "2024"]
 
 PROCESS_GROUP = {
     "GG2H": "ggH",
@@ -207,7 +207,7 @@ for cfg in CATEGORIES:
         frac = group_yield / S_eff if S_eff > 0 else 0.0
         row["frac_%s" % g] = f"{frac * 100:.2f}%"
     row["S_eff"] = round(S_eff, 4)
-    row["B_eff"] = int(round(B_eff))
+    row["B_eff"] = round(B_eff, 4)
     row[ratio_col_name] = round(SoverSplusB, 4)
     rows.append(row)
 
@@ -238,45 +238,3 @@ with open(outname, "w", newline="") as fout:
     writer.writeheader()
     writer.writerows(rows)
 print("\nSaved: %s" % outname)
-
-
-
-# # STXS comparison:
-# SQRTS = "13TeV"
-# CAT_NAMES = [
-#     "RECO_ttH_PTH_0_120",
-#     "RECO_ttH_PTH_GT120"
-# ]
-# CATEGORIES = [
-#     dict(
-#         cat=cat,
-#         sig_file=f"../comparison_stxs/Mar26/Models_IA/signal/CMS-HGG_sigfit_packaged_{cat}.root",
-#         sig_ws="wsig_13TeV",
-#         bkg_file=f"../comparison_stxs/Mar26/Models_IA/background/CMS-HGG_multipdf_{cat}.root",
-#         bkg_ws="multipdf",
-#     )
-#     for cat in CAT_NAMES
-# ]
-# ERA_TAGS = ["preEE", "postEE", "preBPix", "postBPix"]
-# PROD_MODES = [
-#     ("ggZH", ("GG2HQQ", "GG2HLL", "GG2HNUNU")),
-#     ("ggH",  ("GG2H", "GGH")),
-#     ("bbH",  ("BBH",)),
-#     ("VBF",  ("VBF",)),
-#     ("tH",   ("THQ", "THW")),
-#     ("ttH",  ("TTH",)),
-#     ("ZH",   ("ZH2H",)),
-#     ("WH",   ("WPLUSH", "WMINUSH", "WH2H")),
-# ]
-# PROD_MODE_COLUMNS = ["ggH", "VBF", "WH", "ZH", "ttH", "ggZH", "tH", "bbH"]
-# def get_process_group(proc):
-#     proc_upper = proc.upper()
-#     for group, prefixes in PROD_MODES:
-#         if proc_upper.startswith(prefixes):
-#             return group
-#     print("  !! WARNING: no mapping entry for raw process '%s' -- treating as its own group." % proc)
-#     return proc
-
-# group = get_process_group(proc)
-
-# outname = "SoverSplusB_C1reco_STXScomparison.csv" 

@@ -33,7 +33,7 @@
 #include "../interface/RooPowerLawSum.h"
 #include "RooGenericPdf.h"
 #include "../interface/PdfModelBuilder.h"
-#include "HiggsAnalysis/CombinedLimit/interface/RooMultiPdf.h"
+#include "HiggsAnalysis/CombinedLimit/interface/RooMultiPdfCombine.h" // combine >=10.5 (micromamba env): RooMultiPdf.h renamed, getCurrentPdf/getCorrection now inline
 
 using namespace std;
 using namespace RooFit;
