@@ -1,0 +1,8 @@
+{
+    "muttH_kl1":{
+        "pois":"mu_ttH",
+        "fits":"profile1D:statonly:mu_ttH",
+        "points":"80:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs mu_ttH --setParameterRanges mu_ttH=0,3 --setParameters k_lambda=1,lumi_scale=1.0 --freezeParameters MH,lumi_scale,k_lambda,allConstrainedNuisances --saveSpecifiedNuis all"
+    }
+}

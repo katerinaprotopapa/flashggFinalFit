@@ -1,0 +1,62 @@
+{
+    "muttH_kl1":{
+        "pois":"mu_ttH",
+        "fits":"profile1D:statonly:mu_ttH",
+        "points":"80:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs mu_ttH --setParameterRanges mu_ttH=0,3 --setParameters k_lambda=1,lumi_scale=1.0 --freezeParameters MH,lumi_scale,k_lambda,allConstrainedNuisances --saveSpecifiedNuis all"
+    },
+    "kl_muttH1":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonlyMuFixed:k_lambda",
+        "points":"71:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH=1,lumi_scale=1.0 --freezeParameters MH,lumi_scale,mu_ttH,allConstrainedNuisances --saveSpecifiedNuis all"
+    },
+    "kl_muttH1_Run2":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonlyMuFixed:k_lambda",
+        "points":"71:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH_norm=1,lumi_scale=1.248 --freezeParameters MH,lumi_scale,mu_ttH_norm,allConstrainedNuisances --saveSpecifiedNuis all"
+    },
+    "kl_muttHfloat":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonlyMuFloat:k_lambda",
+        "points":"71:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH=1,lumi_scale=1.0 --freezeParameters MH,lumi_scale,allConstrainedNuisances --trackParameters mu_ttH --saveSpecifiedNuis all"
+    },
+    "kl_muttHfloat_Run2":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonlyMuFloat:k_lambda",
+        "points":"71:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH_norm=1,lumi_scale=1.248 --freezeParameters MH,lumi_scale,allConstrainedNuisances --trackParameters mu_ttH_norm --saveSpecifiedNuis all"
+    },
+    "kl_muttH1_lumi300":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonlyMuFixed:k_lambda",
+        "points":"71:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH=1,lumi_scale=1.74 --freezeParameters MH,lumi_scale,mu_ttH,allConstrainedNuisances --saveSpecifiedNuis all"
+    },
+    "kl_muttH1_Run2_lumi300":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonlyMuFixed:k_lambda",
+        "points":"71:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH_norm=1,lumi_scale=2.174 --freezeParameters MH,lumi_scale,mu_ttH_norm,allConstrainedNuisances --saveSpecifiedNuis all"
+    },
+    "kl_muttHfloat_lumi300":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonlyMuFloat:k_lambda",
+        "points":"71:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH=1,lumi_scale=1.74 --freezeParameters MH,lumi_scale,allConstrainedNuisances --trackParameters mu_ttH --saveSpecifiedNuis all"
+    },
+    "kl_muttHfloat_Run2_lumi300":{
+        "pois":"k_lambda",
+        "fits":"profile1D:statonlyMuFloat:k_lambda",
+        "points":"71:20",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH_norm=1,lumi_scale=2.174 --freezeParameters MH,lumi_scale,allConstrainedNuisances --trackParameters mu_ttH_norm --saveSpecifiedNuis all"
+    },
+    "kl_vs_muttH":{
+        "pois":"k_lambda,mu_ttH",
+        "fits":"profile1D:statonlyMuFixed:k_lambda+profile1D:statonlyMuFloat:k_lambda+profile2D:statonly:k_lambda,mu_ttH",
+        "points":"71:20+71:20+3600:60",
+        "fit_opts":"--saveInactivePOI 1 --redefineSignalPOIs k_lambda --setParameterRanges k_lambda=-20,50 --setParameters mu_ttH=1,lumi_scale=1.0 --freezeParameters MH,lumi_scale,mu_ttH,allConstrainedNuisances --saveSpecifiedNuis all+--saveInactivePOI 1 --redefineSignalPOIs k_lambda,mu_ttH --setParameterRanges k_lambda=-20,50:mu_ttH=0,10 --setParameters lumi_scale=1.0 --freezeParameters MH,lumi_scale,allConstrainedNuisances --saveSpecifiedNuis all+--saveInactivePOI 1 --redefineSignalPOIs k_lambda,mu_ttH --setParameterRanges k_lambda=-20,50:mu_ttH=0,10 --setParameters lumi_scale=1.0 --freezeParameters MH,lumi_scale,allConstrainedNuisances --saveSpecifiedNuis all"
+    }
+}

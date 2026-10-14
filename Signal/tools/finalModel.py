@@ -78,7 +78,7 @@ def initialiseXSBR():
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
 class FinalModel:
   # Constructor
-  def __init__(self,_ssfMap,_proc,_cat,_ext,_year,_sqrts,_datasets,_xvar,_MH,_MHLow,_MHHigh,_massPoints,_xsbrMap,_procSyst,_scales,_scalesCorr,_scalesGlobal,_smears,_doVoigtian,_useDCB,_skipVertexScenarioSplit,_skipSystematics):
+  def __init__(self,_ssfMap,_proc,_cat,_ext,_year,_sqrts,_datasets,_xvar,_MH,_MHLow,_MHHigh,_massPoints,_xsbrMap,_procSyst,_scales,_scalesCorr,_scalesGlobal,_smears,_doVoigtian,_useDCB,_skipVertexScenarioSplit,_skipSystematics,_addSigmaScale=False):
     self.ssfMap = _ssfMap
     self.proc = _proc
     self.procSyst = _procSyst # Signal process used for systematics (useful for low stat cases)
@@ -95,6 +95,12 @@ class FinalModel:
     self.MHHigh = _MHHigh
     self.massPoints = _massPoints
     self.intLumi = ROOT.RooRealVar("IntLumi","IntLumi",1.,0.,999999999.) # in pb^-1
+    # Optional global signal width scale (shared by all proc x cat via RecycleConflictNodes), constant at 1.
+    # Only added with --addSigmaScale; set in combine with --setParameters CMS_hgg_sigma_scale=X
+    self.sigmaScale = None
+    if _addSigmaScale:
+      self.sigmaScale = ROOT.RooRealVar("CMS_hgg_sigma_scale","CMS_hgg_sigma_scale",1.,0.1,5.)
+      self.sigmaScale.setConstant(True)
     self.xsbrMap = _xsbrMap
     # Systematics
     self.skipSystematics = _skipSystematics
@@ -363,6 +369,9 @@ class FinalModel:
     dependents = ROOT.RooArgList()
     formula = "@0"
     dependents.add(self.Splines[sigmaSplineName])
+    if self.sigmaScale is not None:
+      formula += "*@1"
+      dependents.add(self.sigmaScale)
     if not skipSystematics:
       # Add systematics
       formula += "*TMath::Max(1.e-2,(1."
