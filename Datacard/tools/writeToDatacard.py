@@ -13,7 +13,7 @@ nuisance_year_map = {
   '2023postBPix':'2023BPix',
   'postBPix':'2023BPix',
   '2024':'2024',
-  '2025':'2025'
+  '2025':'2025',
 }
 
 def writePreamble(f,options):

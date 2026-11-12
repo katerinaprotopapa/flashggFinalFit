@@ -82,8 +82,8 @@ if opt.analysis not in globalReplacementMap:
   leave()
 else: rMap = globalReplacementMap[opt.analysis]
 
-# Fix for 2024 replacement map
-if opt.year == "2024":
+# Fix for 2024 and 2025 replacement map
+if opt.year in ['2024', '2025']:
     rMap['procRVMap']["RECO_TH_tH_had"] = "THQ2HQQ_FID"
     rMap['procRVMap']["RECO_TH_tH_had_res0"] = "THQ2HQQ_FID"
     rMap['procRVMap']["RECO_TH_tH_had_res1"] = "THQ2HQQ_FID"
@@ -209,9 +209,10 @@ if( datasetRVForFit[MHNominal].numEntries() < opt.replacementThreshold  )|( data
     # d = reduceDataset(inputWS.data("%s_%s_hgg_%s_%s_%s"%(procToData(procReplacementFit.split("_")[0]),opt.year,mp,sqrts__,catReplacementFit)),aset)
 
     d = reduceDataset(inputWS.data("%s__%s__%s__%s"%(procReplacementFit,mp,sqrts__,catReplacementFit)),aset)
-
+    print(d.numEntries())
     if opt.skipVertexScenarioSplit: datasetRVForFit[mp] = d
     else: datasetRVForFit[mp] = splitRVWV(d,aset,mode="RV")
+    print(datasetRVForFit[mp].numEntries())
     inputWS.Delete()
     f.Close() 
 

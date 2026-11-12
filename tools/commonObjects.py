@@ -24,6 +24,8 @@ lumiMap = {
     '2022postEE':26.68,
     'preEE':7.99,
     'postEE':26.68,
+    '2023preBPix':17.96,
+    '2023postBPix':9.68,
     "preBPix": 17.96,
     "postBPix": 9.68,
     "2024":  109.95,
@@ -47,7 +49,7 @@ productionModes = ['ggH','qqH','ttH','tHq','tHW','ggZH','WH','ZH','bbH']
 decayMode = 'hgg'
 
 # List of years
-# years_to_process = ['2016','2017','2018','2022preEE','2022postEE']
+# years_to_process = ['2016','2017','2018','2022preEE','2022postEE','2023preBPix','2023postBPix','2024', '2025']
 years_to_process = ['preEE', 'postEE', 'preBPix', 'postBPix', '2024', '2025']
 
 # flashgg input WS objects
