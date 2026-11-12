@@ -5,7 +5,7 @@ _year = '2024'
 signalScriptCfg = {
   
   # Setup
-  'inputWSDir':'/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/final_fits/MC/nominal/%s'%_year,
+  'inputWSDir':'/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/final_fits_22_23_24_25_DD_20261104/MC/nominal/%s'%_year,
   'procs':'auto', # if auto: inferred automatically from filenames
   'cats':'auto', # if auto: inferred automatically from (0) workspace
   'ext':'kl_C1reco_%s'%_year,

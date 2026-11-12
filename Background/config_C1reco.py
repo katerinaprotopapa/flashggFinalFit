@@ -3,7 +3,7 @@
 backgroundScriptCfg = {
   
   # Setup
-  'inputWS':'/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/final_fits/Data/nominal/merge/allData_merge.root', # location of 'allData.root' file
+  'inputWS':'/vols/cms/evp18/trilinear_higgs/run3hggstxs/src/run3hggstxs/final_fits_22_23_24_25_DD_20261104/Data/nominal/merge/allData_merge.root', # location of 'allData.root' file
   'cats':'auto', # auto: automatically inferred from input ws
   'catOffset':0, # add offset to category numbers (useful for categories from different allData.root files)  
   'ext':'kl_C1reco', # extension to add to output directory
